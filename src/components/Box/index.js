@@ -13,6 +13,7 @@ const Box = styled.div`
     color: #2E7BB4;
     text-decoration: none;
     font-weight: 800;
+    word-break: break-word;
   }
   .title {
     font-size: 32px;
@@ -30,6 +31,16 @@ const Box = styled.div`
     font-weight: 700;
     color: #333333;
     margin-bottom: 20px;
+  }
+  .inputTestimonialArea {
+    border-radius: 8px;
+    height: 80px;
+    width: 100%;
+    background-color: #F4F4F4;
+    color: #333333;
+    border: 0;
+    padding: 8px;
+    margin-bottom: 14px;
   }
   hr {
     margin-top: 12px;
@@ -57,6 +68,6 @@ const Box = styled.div`
     border-radius: 10000px;
     background-color: #6F92BB;
   }
-`; 
+`;
 
 export default Box

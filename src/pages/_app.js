@@ -1,5 +1,7 @@
+import initFirebase from '../services/Firebase/initFirebase';
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
-import { AlurakutStyles } from '../src/lib/AlurakutCommons';
+import { AlurakutStyles } from '../lib/AlurakutCommons'
+import { Head_app } from '../components/Head'
 
 const GlobalStyle = createGlobalStyle`
   /* Reset CSS (Necolas Reset CSS <3) */
@@ -35,9 +37,12 @@ const theme = {
   },
 }
 
+initFirebase();
+
 export default function App({ Component, pageProps }) {
   return (
     <>
+      <Head_app />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Component {...pageProps} />

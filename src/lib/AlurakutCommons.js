@@ -1,10 +1,10 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import NextLink from 'next/link';
+import { useState } from 'react';
+import NextLink from 'next/link'
+import styled, { css } from 'styled-components'
+import { useRouter } from 'next/dist/client/router';
 
 const BASE_URL = 'http://alurakut.vercel.app/';
-const v = '1';
-
+const v = 1;
 
 function Link({ href, children, ...props }) {
   return (
@@ -19,15 +19,26 @@ function Link({ href, children, ...props }) {
 // ================================================================================================================
 // Menu
 // ================================================================================================================
-export function AlurakutMenu({ githubUser }) {
-  const [isMenuOpen, setMenuState] = React.useState(false);
+export function AlurakutMenu({ loginGithub, logout, userLoggedImageSRC }) {
+  const [isMenuOpen, setMenuState] = useState(false);
+  const [search, setSearch] = useState("");
+  const router = useRouter()
+
+  function handleSearch(e) {
+    e.preventDefault()
+    const dadosDoForm = new FormData(e.target)
+    setSearch(dadosDoForm.get('search'))
+    router.push(`/users/${search}`)
+    setSearch("")
+  }
+
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
         <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
 
         <nav style={{ flex: 1 }}>
-          {[{ name: 'Inicio', slug: '/'}, {name: 'Amigos', slug: '/amigos'}, {name: 'Comunidades', slug: '/comunidades'}].map((menuItem) => (
+          {[{ name: 'Inicio', slug: '/' }, { name: 'Amigos', slug: '/amigos' }, { name: 'Comunidades', slug: '/comunidades' }].map((menuItem) => (
             <Link key={`key__${menuItem.name.toLocaleLowerCase()}`} href={`${menuItem.slug.toLocaleLowerCase()}`}>
               {menuItem.name}
             </Link>
@@ -35,11 +46,36 @@ export function AlurakutMenu({ githubUser }) {
         </nav>
 
         <nav>
-          <a href={`/logout`}>
-            Sair
-          </a>
+          {userLoggedImageSRC
+            ? (<>
+              <img
+                src={userLoggedImageSRC}
+                style={{
+                  maxHeight: '30px',
+                  borderRadius: '8px',
+                  margin: 'auto'
+                }}
+              />
+              <a
+                onClick={logout}
+              >
+                Sair
+              </a>
+            </>)
+            : <a
+              href="/login"
+            >Entrar</a>
+          }
           <div>
-            <input placeholder="Pesquisar no Orkut" />
+            <form onSubmit={(e) => handleSearch(e)} >
+              <input
+                type="text"
+                placeholder="Pesquisar no Orkut"
+                name="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </form>
           </div>
         </nav>
 
@@ -48,7 +84,7 @@ export function AlurakutMenu({ githubUser }) {
           {!isMenuOpen && <img src={`${BASE_URL}/icons/menu-closed.svg?v=${v}`} />}
         </button>
       </div>
-      <AlurakutMenuProfileSidebar githubUser={githubUser} />
+      <AlurakutMenuProfileSidebar githubUser={loginGithub} />
     </AlurakutMenu.Wrapper>
   )
 }
@@ -171,7 +207,10 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
   return (
     <div className="alurakutMenuProfileSidebar">
       <div>
-        <img src={`https://github.com/${githubUser}.png`} style={{ borderRadius: '8px' }} />
+        <img src={`https://github.com/${githubUser}.png`} style={{
+          borderRadius: '8px',
+          margin: 'auto'
+        }} />
         <hr />
         <p>
           <a className="boxLink" href={`/user/${githubUser}`}>
@@ -189,37 +228,42 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
 // ================================================================================================================
 // AlurakutProfileSidebarMenuDefault
 // ================================================================================================================
-export function AlurakutProfileSidebarMenuDefault() {
+export function AlurakutProfileSidebarMenuDefault({ logout, userLoggedImageSRC }) {
   return (
     <AlurakutProfileSidebarMenuDefault.Wrapper>
       <nav>
         <a href="/">
           <img src={`${BASE_URL}/icons/user.svg`} />
-            Perfil
-          </a>
+          Perfil
+        </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/book.svg`} />
-            Recados
-          </a>
+          Recados
+        </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/camera.svg`} />
-            Fotos
-          </a>
+          Fotos
+        </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/sun.svg`} />
-            Depoimentos
-          </a>
+          Depoimentos
+        </a>
       </nav>
       <hr />
       <nav>
-        <a href="/">
+        <a href="https://github.com/trending" target="_blank">
           <img src={`${BASE_URL}/icons/plus.svg`} />
-            GitHub Trends
-          </a>
-        <a href="/logout">
-          <img src={`${BASE_URL}//icons/logout.svg`} />
-            Sair
-          </a>
+          GitHub Trends
+        </a>
+        {userLoggedImageSRC
+          ? (<>
+            <a onClick={logout}             >
+              <img src={`${BASE_URL}//icons/logout.svg`} />
+              Sair
+            </a>
+          </>)
+          : <a href="/login" >Entrar</a>
+        }
       </nav>
     </AlurakutProfileSidebarMenuDefault.Wrapper>
   )
