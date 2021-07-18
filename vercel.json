@@ -1,0 +1,5 @@
+{
+    "env": {
+        "FIREBASE_PRIVATE_KEY": "@gfirebase-private-key-alurakut"
+    }
+}
