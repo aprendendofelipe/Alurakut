@@ -1,5 +1,5 @@
 {
     "env": {
-        "FIREBASE_PRIVATE_KEY": "@gfirebase-private-key-alurakut"
+        "FIREBASE_PRIVATE_KEY": "@firebase-private-key-alurakut"
     }
 }
