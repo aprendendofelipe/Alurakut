@@ -19,7 +19,7 @@ const Home = (props) => {
   const loginGithub = props.loggedGithubUser.login
   const userLoggedImageSRC = props.loggedGithubUser.avatar_url
   const [comunidades, setComunidades] = useState([])
-  const [countComunidades, setCountComunidades] = useState(0)
+  const [countComunidades, setCountComunidades] = useState()
 
   const pessoasFavoritas = [
     'juunegreiros',

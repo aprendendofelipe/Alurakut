@@ -70,7 +70,7 @@ export function AlurakutMenu({ loginGithub, logout, userLoggedImageSRC }) {
             <form onSubmit={(e) => handleSearch(e)} >
               <input
                 type="text"
-                placeholder="Pesquisar no Orkut"
+                placeholder="Pesquisar no Alurakut/GitHub"
                 name="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}

@@ -16,20 +16,10 @@ import TestimonialsBoxWrapper from '../../../components/Testimonials'
 const Home = (props) => {
   const loginGithub = props.githubUser.login;
   const [comunidades, setComunidades] = useState([]);
-  const [countComunidades, setCountComunidades] = useState(0);
+  const [countComunidades, setCountComunidades] = useState();
   const [token, setToken] = useState("");
-
-  const [testimonials, setTestimonials] = useState(
-    props.testimonials.testimonials.map((item) => {
-      return {
-        name: item.author,
-        key: item.id,
-        href: `/users/${item.author}`,
-        imgSRC: `https://github.com/${item.author}.png`,
-        text: item.text
-      }
-    }));
-  const [countTestimonials, setCountTestimonials] = useState(props.testimonials.countTestimonials);
+  const [testimonials, setTestimonials] = useState([]);
+  const [countTestimonials, setCountTestimonials] = useState();
   const [newTestimonials, setNewTestimonials] = useState("");
   const [userLoggedImageSRC, setUserLoggedImageSRC] = useState("");
 
@@ -144,6 +134,21 @@ const Home = (props) => {
         setCountTestimonials(countTestimonials + 1)
       })
   }
+
+  useEffect(() => {
+    setTestimonials(
+      props.testimonials.testimonials.map((item) => {
+        return {
+          name: item.author,
+          key: item.id,
+          href: `/users/${item.author}`,
+          imgSRC: `https://github.com/${item.author}.png`,
+          text: item.text
+        }
+      }))
+    setCountTestimonials(props.testimonials.countTestimonials)
+
+  }, [router, loginGithub])
 
   return (
     <>
