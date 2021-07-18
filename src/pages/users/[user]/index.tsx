@@ -12,36 +12,19 @@ import { getAllCommunities, getUserCommunities } from '../../../services/Dato/Da
 import firebase from '../../../services/Firebase/firebase'
 import tokenChangedHandler from '../../../services/Firebase/tokenChangedHandler'
 import TestimonialsBoxWrapper from '../../../components/Testimonials'
+import { pessoasFavoritasOBJList } from '../../../utils/topUsers'
 
 const Home = (props) => {
   const loginGithub = props.githubUser.login;
   const [comunidades, setComunidades] = useState([]);
-  const [countComunidades, setCountComunidades] = useState();
+  const [countComunidades, setCountComunidades] = useState(0);
   const [token, setToken] = useState("");
   const [testimonials, setTestimonials] = useState([]);
-  const [countTestimonials, setCountTestimonials] = useState();
+  const [countTestimonials, setCountTestimonials] = useState(0);
   const [newTestimonials, setNewTestimonials] = useState("");
   const [userLoggedImageSRC, setUserLoggedImageSRC] = useState("");
 
   const router = useRouter()
-
-  const pessoasFavoritas = [
-    'juunegreiros',
-    'omariosouto',
-    'peas',
-    'rafaballerini',
-    'marcobrunodev',
-    'aprendendofelipe',
-  ]
-
-  const pessoasFavoritasOBJList = pessoasFavoritas.map((user, i) => {
-    return {
-      name: user,
-      key: `${i}`,
-      href: `/users/${user}`,
-      imgSRC: `https://github.com/${user}.png`
-    }
-  })
 
 
   // const [seguidores, setSeguidores] = useState([]);

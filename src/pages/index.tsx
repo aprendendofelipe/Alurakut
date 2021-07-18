@@ -3,7 +3,7 @@ import Head from 'next/head';
 import jwt from 'jsonwebtoken'
 import MainGrid from '../components/MainGrid'
 import Box from '../components/Box'
-import { AlurakutMenu, OrkutNostalgicIconSet } from '../lib/AlurakutCommons';
+import { AlurakutMenu, OrkutNostalgicIconSet } from '../lib/AlurakutCommons'
 import ProfileRelationsBoxWrapper from '../components/ProfileRelations'
 import {
   withAuthUser,
@@ -11,33 +11,16 @@ import {
   AuthAction,
   useAuthUser,
 } from 'next-firebase-auth'
-import ProfileSidebar from '../components/ProfileSidebar';
-import { UserGithubAPI } from '../services/Github/github';
-import { getUserCommunities } from '../services/Dato/DatoAlura';
+import ProfileSidebar from '../components/ProfileSidebar'
+import { UserGithubAPI } from '../services/Github/github'
+import { getUserCommunities } from '../services/Dato/DatoAlura'
+import { pessoasFavoritasOBJList } from '../utils/topUsers'
 
 const Home = (props) => {
   const loginGithub = props.loggedGithubUser.login
   const userLoggedImageSRC = props.loggedGithubUser.avatar_url
   const [comunidades, setComunidades] = useState([])
-  const [countComunidades, setCountComunidades] = useState()
-
-  const pessoasFavoritas = [
-    'juunegreiros',
-    'omariosouto',
-    'peas',
-    'rafaballerini',
-    'marcobrunodev',
-    'aprendendofelipe',
-  ]
-
-  const pessoasFavoritasOBJList = pessoasFavoritas.map((user, i) => {
-    return {
-      name: user,
-      key: `${i}`,
-      href: `/users/${user}`,
-      imgSRC: `https://github.com/${user}.png`
-    }
-  })
+  const [countComunidades, setCountComunidades] = useState(0)
 
   // const [seguidores, setSeguidores] = useState([])
   // 0 - Pegar o array de dados do github 
