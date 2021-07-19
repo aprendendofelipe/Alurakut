@@ -14,9 +14,9 @@ const LoginPage = () => {
           <section className="logoArea">
             <img src="https://alurakut.vercel.app/logo.svg" />
 
-            <p><strong>Conecte-se</strong> aos seus amigos e familiares usando recados e mensagens instantâneas</p>
+            <p><strong>Conecte-se</strong> aos seus amigos desenvolvedores de deixe seus depoimentos</p>
             <p><strong>Conheça</strong> novas pessoas através de amigos de seus amigos e comunidades</p>
-            <p><strong>Compartilhe</strong> seus vídeos, fotos e paixões em um só lugar</p>
+            <p><strong>Compartilhe</strong> seus projetos em um só lugar</p>
           </section>
 
           <section className="formArea">

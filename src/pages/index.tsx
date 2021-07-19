@@ -16,12 +16,16 @@ import { UserGithubAPI } from '../services/Github/github'
 import { getUserCommunities } from '../services/Dato/DatoAlura'
 import { pessoasFavoritasOBJList } from '../utils/topUsers'
 import { handleCriaComunidade } from '../services/Dato/Communities'
+import TestimonialsBoxWrapper from '../components/Testimonials'
+import { getTestemonials } from '../services/Dato/Dato'
 
 const Home = (props) => {
   const loginGithub = props.loggedGithubUser.login
   const userLoggedImageSRC = props.loggedGithubUser.avatar_url
   const [comunidades, setComunidades] = useState([])
   const [countComunidades, setCountComunidades] = useState(0)
+  const [testimonials, setTestimonials] = useState([]);
+  const [countTestimonials, setCountTestimonials] = useState(0);
 
   // const [seguidores, setSeguidores] = useState([])
   // 0 - Pegar o array de dados do github 
@@ -51,6 +55,19 @@ const Home = (props) => {
 
     }
     getCommunities()
+
+    setTestimonials(
+      props.testimonials.testimonials.map((item) => {
+        return {
+          name: item.author,
+          key: item.id,
+          href: `/users/${item.author}`,
+          imgSRC: `https://github.com/${item.author}.png`,
+          text: item.text
+        }
+      }))
+    setCountTestimonials(props.testimonials.countTestimonials)
+
   }, [])
 
 
@@ -106,6 +123,11 @@ const Home = (props) => {
               </button>
             </form>
           </Box>
+          <TestimonialsBoxWrapper
+            loginGithub={loginGithub}
+            count={countTestimonials}
+            list={testimonials}
+          />
         </div>
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
           {/* <ProfileRelationsBoxWrapper title="Seguidores" list={seguidores} /> */}
@@ -136,9 +158,12 @@ export const getServerSideProps = withAuthUserTokenSSR({
 
   const loggedGithubUser = await UserGithubAPI(loggedGithubUserID);
 
+  const testimonials = await getTestemonials(loggedGithubUser.login)
+
   return {
     props: {
       loggedGithubUser,
+      testimonials
     },
   }
 })

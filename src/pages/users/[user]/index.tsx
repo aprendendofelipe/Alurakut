@@ -227,7 +227,7 @@ export async function getStaticProps({ params }) {
       githubUser,
       testimonials
     },
-    revalidate: 15,
+    revalidate: 5,
   }
 }
 
