@@ -8,7 +8,7 @@ import { AlurakutMenu, OrkutNostalgicIconSet } from '../../lib/AlurakutCommons'
 import ProfileRelationsBoxWrapper from '../../components/ProfileRelations'
 import ProfileSidebar from '../../components/ProfileSidebar'
 import { UserGithubAPI, UsersGithubAPI } from '../../services/Github/github'
-import { getAllCommunities, getUserCommunities } from '../../services/Dato/DatoAlura'
+import { getAllCommunities, getUserCommunities } from '../../services/Dato/Dato'
 import firebase from '../../services/Firebase/firebase'
 import tokenChangedHandler from '../../services/Firebase/tokenChangedHandler'
 import { pessoasFavoritasOBJList } from '../../utils/topUsers'
@@ -28,7 +28,7 @@ const Communities = (props) => {
         const getCommunities = async () => {
             const { communities, countCommunities } = await getUserCommunities(loginGithub);
 
-            const comunidadesOBJList = communities.map((community) => {
+            const comunidadesOBJList = communities?.map((community) => {
                 return {
                     name: community.title,
                     key: community.id,
@@ -98,7 +98,7 @@ const Communities = (props) => {
                     </Box>
 
                     <Box>
-                        <h2 className="subTitle">Crie novas comunidades (se a conta da Alura no Dato voltar a permitir).</h2>
+                        <h2 className="subTitle">Crie novas comunidades.</h2>
                         <form onSubmit={(e) => handleCriaComunidade(e, loginGithub)}>
                             <div>
                                 <input
@@ -151,16 +151,18 @@ export async function getStaticProps() {
 
     const firstsCommunities = await getAllCommunities()
 
-    const allCommunities = firstsCommunities.communities.map((community) => {
-        return {
-            name: community.title,
-            key: community.id,
-            href: `/communities`,
-            imgSRC: community.imageUrl
-        }
-    })
+    const allCommunities = firstsCommunities?.communities
+        ? firstsCommunities.communities.map((community) => {
+            return {
+                name: community.title,
+                key: community.id,
+                href: `/communities`,
+                imgSRC: community.imageUrl
+            }
+        })
+        : []
 
-    const countAllCommunities = firstsCommunities.countCommunities
+    const countAllCommunities = firstsCommunities.countCommunities || 0
 
     return {
         props: {

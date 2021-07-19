@@ -13,7 +13,7 @@ import {
 } from 'next-firebase-auth'
 import ProfileSidebar from '../components/ProfileSidebar'
 import { UserGithubAPI } from '../services/Github/github'
-import { getUserCommunities } from '../services/Dato/DatoAlura'
+import { getUserCommunities } from '../services/Dato/Dato'
 import { pessoasFavoritasOBJList } from '../utils/topUsers'
 import { handleCriaComunidade } from '../services/Dato/Communities'
 import TestimonialsBoxWrapper from '../components/Testimonials'
@@ -42,7 +42,7 @@ const Home = (props) => {
 
       const { communities, countCommunities } = await getUserCommunities(loginGithub);
 
-      const comunidadesOBJList = communities.map((community) => {
+      const comunidadesOBJList = communities?.map((community) => {
         return {
           name: community?.title,
           key: community?.id,
@@ -103,12 +103,12 @@ const Home = (props) => {
           </Box>
 
           <Box>
-            <h2 className="subTitle">Pesquise outros usuários na barra de pesquisa.</h2>
+            <h2 className="subTitle">Pesquise outros usuários pela barra de pesquisa.</h2>
             <h2 className="subTitle">Escreva seu depoimento no perfil que quiser.</h2>
             <h2 className="subTitle">Convide seus amigos para ver seu depoimento no perfil deles.</h2>
           </Box>
           <Box>
-            <h2 className="subTitle">Crie novas comunidades (se a conta da Alura no Dato voltar a permitir).</h2>
+            <h2 className="subTitle">Crie novas comunidades.</h2>
             <form onSubmit={(e) => handleCriaComunidade(e, loginGithub)}>
               <div>
                 <input

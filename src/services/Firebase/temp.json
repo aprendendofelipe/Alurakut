@@ -1,0 +1,18 @@
+{
+    "data": {
+        "type": "item",
+        "attributes": {
+            "title": "Next.js",
+            "image_url": "https://images.ctfassets.net/23aumh6u8s0i/c04wENP3FnbevwdWzrePs/1e2739fa6d0aa5192cf89599e009da4e/nextjs",
+            "creator_slug": "aprendendofelipe"
+        },
+        "relationships": {
+            "item_type": {
+                "data": {
+                    "type": "item_type",
+                    "id": "980113"
+                }
+            }
+        }
+    }
+}

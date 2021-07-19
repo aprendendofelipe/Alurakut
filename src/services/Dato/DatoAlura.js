@@ -1,10 +1,10 @@
 const DatoAuthorizationAlura = '7f7590695431ea76f84616a4b4d32d'
 const DatoURL = 'https://graphql.datocms.com/'
 
-export async function getUserCommunities(loginGithub, page = 1) {
+export async function getUserCommunitiesAlura(loginGithub, page = 1) {
   const skip = (page - 1) * 6;
 
-  const Communities = await fetch(DatoURL, {
+  const UserCommunitiesAlura = await fetch(DatoURL, {
     method: 'POST',
     headers: {
       'Authorization': DatoAuthorizationAlura,
@@ -41,15 +41,14 @@ export async function getUserCommunities(loginGithub, page = 1) {
     })
 
   return {
-    communities: Communities.comunidadesVindasDoDato,
-    countCommunities: Communities.countCommunitiesVindasDoDato
+    UserCommunitiesAlura
   }
 }
 
-export async function getAllCommunities(page = 1) {
+export async function getAllCommunitiesAlura(page = 1) {
   const skip = (page - 1) * 15;
 
-  const Communities = await fetch(DatoURL, {
+  const UserAllCommunitiesAlura = await fetch(DatoURL, {
     method: 'POST',
     headers: {
       'Authorization': DatoAuthorizationAlura,
@@ -80,8 +79,7 @@ export async function getAllCommunities(page = 1) {
     })
 
   return {
-    communities: Communities.comunidadesVindasDoDato,
-    countCommunities: Communities.countCommunitiesVindasDoDato
+    UserAllCommunitiesAlura
   }
 }
 

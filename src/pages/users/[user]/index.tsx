@@ -8,7 +8,7 @@ import ProfileRelationsBoxWrapper from '../../../components/ProfileRelations'
 import ProfileSidebar from '../../../components/ProfileSidebar'
 import { UsersGithubAPI } from '../../../services/Github/github'
 import { getTestemonials } from '../../../services/Dato/Dato'
-import { getAllCommunities, getUserCommunities } from '../../../services/Dato/DatoAlura'
+import { getAllCommunities, getUserCommunities } from '../../../services/Dato/Dato'
 import firebase from '../../../services/Firebase/firebase'
 import tokenChangedHandler from '../../../services/Firebase/tokenChangedHandler'
 import TestimonialsBoxWrapper from '../../../components/Testimonials'
@@ -41,7 +41,7 @@ const Profile = (props) => {
 
       const { communities, countCommunities } = await getUserCommunities(loginGithub);
 
-      const comunidadesOBJList = communities.map((community) => {
+      const comunidadesOBJList = communities?.map((community) => {
         return {
           name: community.title,
           key: community.id,
