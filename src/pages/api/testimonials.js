@@ -39,8 +39,6 @@ export default async function recebedorDeRequests(req, res) {
                 ...req.body,
             })
 
-            console.log(registroCriado);
-
             res.status(201).json({
                 registroCriado: registroCriado,
             })

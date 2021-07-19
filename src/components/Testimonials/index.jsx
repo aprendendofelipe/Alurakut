@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Link from '../../utils/Link';
 import Box from '../Box';
 
 const BoxWrapper = styled(Box)`
@@ -87,10 +88,10 @@ export default function TestimonialsBoxWrapper({ loginGithub, count, list }) {
           return (
             <li key={item.key}>
               <div>
-                <a href={item.href}>
+                <Link href={item.href}>
                   <img src={item.imgSRC} />
-                  <span>{item.name}</span>
-                </a>
+                </Link>
+                <span>{item.name}</span>
                 <p>{item.text}</p>
               </div>
             </li>)

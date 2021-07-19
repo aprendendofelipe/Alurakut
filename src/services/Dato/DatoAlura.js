@@ -3,7 +3,6 @@ const DatoURL = 'https://graphql.datocms.com/'
 
 export async function getUserCommunities(loginGithub, page = 1) {
   const skip = (page - 1) * 6;
-  console.log("buscando comunidades")
 
   const Communities = await fetch(DatoURL, {
     method: 'POST',

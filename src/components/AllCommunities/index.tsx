@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Link from '../../utils/Link';
 import Box from '../Box';
 
 const BoxWrapper = styled(Box)`
@@ -52,24 +53,24 @@ const BoxWrapper = styled(Box)`
   `;
 
 export default function AllCommunitiesBoxWrapper({ title, count, list }) {
-    return (
-        <BoxWrapper>
-            <h2 className="smallTitle">
-                {`${title} (${count})`}
-            </h2>
+  return (
+    <BoxWrapper>
+      <h2 className="smallTitle">
+        {`${title} (${count})`}
+      </h2>
 
-            <ul>
-                {list && list.map((item) => {
-                    return (
-                        <li key={item.key}>
-                            <a href={item.href}>
-                                <img src={item.imgSRC} />
-                                <span>{item.name}</span>
-                            </a>
-                        </li>
-                    )
-                })}
-            </ul>
-        </BoxWrapper>
-    )
+      <ul>
+        {list && list.map((item) => {
+          return (
+            <li key={item.key}>
+              <Link href={item.href}>
+                <img src={item.imgSRC} />
+                <span>{item.name}</span>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+    </BoxWrapper>
+  )
 }

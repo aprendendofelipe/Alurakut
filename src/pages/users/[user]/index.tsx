@@ -232,15 +232,12 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  // Get the paths we want to pre-render based on posts
   const paths = []
-  // const paths = pessoasFavoritas
-  console.log("pessoasFavoritas: ", pessoasFavoritas)
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: blocking } will server-render pages
-  // on-demand if the path doesn't exist.
-  return { paths, fallback: 'blocking' }
+  return {
+    paths,
+    fallback: 'blocking'
+  }
 }
 
 export default Profile

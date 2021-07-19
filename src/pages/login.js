@@ -1,6 +1,7 @@
 import { withAuthUser, AuthAction } from 'next-firebase-auth'
-import FirebaseAuth from '../components/FirebaseAuth';
-import Head from 'next/head';
+import FirebaseAuth from '../components/FirebaseAuth'
+import Head from 'next/head'
+import Link from '../utils/Link'
 
 const LoginPage = () => {
   return (
@@ -30,18 +31,29 @@ const LoginPage = () => {
             <footer className="box">
               <p>
                 Ainda não é membro? <br />
-                <a href="/login">
+                <Link href="/users/aprendendofelipe">
                   <strong>
                     ENTRAR JÁ
                   </strong>
-                </a>
+                </Link>
               </p>
             </footer>
           </section>
 
           <footer className="footerArea">
             <p>
-              © 2021 alura.com.br - <a href="/">Sobre o Orkut.br</a> - <a href="/">Centro de segurança</a> - <a href="/">Privacidade</a> - <a href="/">Termos</a> - <a href="/">Contato</a>
+              <a href="https://www.alura.com.br/" target="_blank">
+                © 2021 alura.com.br</a> - <a
+                  href="https://github.com/aprendendofelipe/alurakut" target="_blank"
+                >Sobre o Alurakut.br</a> - <a
+                  href="https://github.com/aprendendofelipe/alurakut" target="_blank"
+                >Centro de segurança</a> - <a
+                  href="https://github.com/aprendendofelipe/alurakut" target="_blank"
+                >Privacidade</a> - <a
+                  href="https://github.com/aprendendofelipe/alurakut" target="_blank"
+                >Termos</a> - <Link
+                  href="https://www.linkedin.com/in/felipe-soares/" target="_blank"
+                >Contato</Link>
             </p>
           </footer>
         </div>

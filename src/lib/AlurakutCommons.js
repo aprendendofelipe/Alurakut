@@ -1,20 +1,10 @@
 import { useState } from 'react';
-import NextLink from 'next/link'
+import Link from '../utils/Link'
 import styled, { css } from 'styled-components'
 import { useRouter } from 'next/dist/client/router';
 
 const BASE_URL = 'http://alurakut.vercel.app/';
 const v = 1;
-
-function Link({ href, children, ...props }) {
-  return (
-    <NextLink href={href} passHref>
-      <a {...props}>
-        {children}
-      </a>
-    </NextLink>
-  )
-}
 
 // ================================================================================================================
 // Menu
@@ -35,7 +25,9 @@ export function AlurakutMenu({ loginGithub, logout, userLoggedImageSRC }) {
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
-        <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
+        <Link href="/">
+          <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
+        </Link>
 
         <nav style={{ flex: 1 }}>
           {[{ name: 'Inicio', slug: '/' }, { name: 'Amigos', slug: '/' }, { name: 'Comunidades', slug: '/communities' }].map((menuItem) => (
@@ -62,9 +54,9 @@ export function AlurakutMenu({ loginGithub, logout, userLoggedImageSRC }) {
                 Sair
               </a>
             </>)
-            : <a
+            : <Link
               href="/login"
-            >Entrar</a>
+            >Entrar</Link>
           }
         </nav>
         <div>
@@ -240,18 +232,18 @@ export function AlurakutProfileSidebarMenuDefault({ logout, userLoggedImageSRC }
           <img src={`${BASE_URL}/icons/user.svg`} />
           Perfil
         </a>
-        <a href="/testimonials">
+        <Link href="/testimonials">
           <img src={`${BASE_URL}/icons/book.svg`} />
           Recados
-        </a>
-        <a href="/communities">
+        </Link>
+        <Link href="/communities">
           <img src={`${BASE_URL}/icons/camera.svg`} />
           Comunidades
-        </a>
-        <a href="/testimonials">
+        </Link>
+        <Link href="/testimonials">
           <img src={`${BASE_URL}/icons/sun.svg`} />
           Depoimentos
-        </a>
+        </Link>
       </nav>
       <hr />
       <nav>
@@ -266,7 +258,7 @@ export function AlurakutProfileSidebarMenuDefault({ logout, userLoggedImageSRC }
               Sair
             </a>
           </>)
-          : <a href="/login" >Entrar</a>
+          : <Link href="/login" >Entrar</Link>
         }
       </nav>
     </AlurakutProfileSidebarMenuDefault.Wrapper>
