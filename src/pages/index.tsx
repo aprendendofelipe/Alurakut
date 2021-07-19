@@ -95,6 +95,9 @@ const Home = (props) => {
             <h1 className="title">
               {`Bem vindo(a), ${loginGithub}`}
             </h1>
+            <p>
+              {props.githubUser.bio}
+            </p>
 
             <OrkutNostalgicIconSet />
           </Box>
