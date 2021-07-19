@@ -135,11 +135,14 @@ AlurakutMenu.Wrapper = styled.header`
   .container {
     background-color: #308BC5;
     padding: 7px 16px;
-    max-width: 1110px;
+    width: 100vw;
+    max-width: 1078px;
     margin: auto;
     display: flex;
     justify-content: space-between;
-    position: relative;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
     z-index: 101;
     @media(min-width: 860px) {
       justify-content: flex-start;
