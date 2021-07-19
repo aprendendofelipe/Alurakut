@@ -48,7 +48,7 @@ export async function getUserCommunitiesAlura(loginGithub, page = 1) {
 export async function getAllCommunitiesAlura(page = 1) {
   const skip = (page - 1) * 15;
 
-  const UserAllCommunitiesAlura = await fetch(DatoURL, {
+  const AllCommunitiesAlura = await fetch(DatoURL, {
     method: 'POST',
     headers: {
       'Authorization': DatoAuthorizationAlura,
@@ -79,7 +79,7 @@ export async function getAllCommunitiesAlura(page = 1) {
     })
 
   return {
-    UserAllCommunitiesAlura
+    AllCommunitiesAlura
   }
 }
 

@@ -105,9 +105,11 @@ export async function getUserCommunities(loginGithub, page = 1) {
 }
 
 export async function getAllCommunities(page = 1) {
+  const { AllCommunitiesAlura } = await getAllCommunitiesAlura(page)
+
   const skip = (page - 1) * 15;
 
-  const Communities = await fetch(DatoURL, {
+  const DatoCommunities = await fetch(DatoURL, {
     method: 'POST',
     headers: {
       'Authorization': DatoAuthorizationAlurakut,
@@ -138,8 +140,10 @@ export async function getAllCommunities(page = 1) {
     })
 
   return {
-    communities: Communities.comunidadesVindasDoDato,
-    countCommunities: Communities.countCommunitiesVindasDoDato
+    communities: DatoCommunities.comunidadesVindasDoDato,
+    aluraCommunities: AllCommunitiesAlura.comunidadesVindasDoDato,
+    countCommunities: DatoCommunities.countCommunitiesVindasDoDato,
+    countCommunitiesAlura: AllCommunitiesAlura.countCommunitiesVindasDoDato
   }
 }
 

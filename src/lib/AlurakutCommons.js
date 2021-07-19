@@ -232,7 +232,7 @@ export function AlurakutProfileSidebarMenuDefault({ logout, userLoggedImageSRC }
           <img src={`${BASE_URL}/icons/user.svg`} />
           Perfil
         </a>
-        <Link href="/testimonials">
+        <Link href="/users/aprendendofelipe">
           <img src={`${BASE_URL}/icons/book.svg`} />
           Recados
         </Link>
@@ -240,7 +240,7 @@ export function AlurakutProfileSidebarMenuDefault({ logout, userLoggedImageSRC }
           <img src={`${BASE_URL}/icons/camera.svg`} />
           Comunidades
         </Link>
-        <Link href="/testimonials">
+        <Link href="/users/aprendendofelipe">
           <img src={`${BASE_URL}/icons/sun.svg`} />
           Depoimentos
         </Link>

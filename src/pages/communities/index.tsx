@@ -127,6 +127,11 @@ const Communities = (props) => {
                         list={props.allCommunities}
                         count={props.countAllCommunities}
                     />
+                    <AllCommunitiesBoxWrapper
+                        title="Todas as Comunidades no Dato da Alura"
+                        list={props.allCommunitiesAlura}
+                        count={props.countAllCommunitiesAlura}
+                    />
                 </div>
                 <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
 
@@ -162,12 +167,26 @@ export async function getStaticProps() {
         })
         : []
 
+    const allCommunitiesAlura = firstsCommunities?.aluraCommunities
+        ? firstsCommunities.aluraCommunities.map((community) => {
+            return {
+                name: community.title,
+                key: community.id,
+                href: `/communities`,
+                imgSRC: community.imageUrl
+            }
+        })
+        : []
+
     const countAllCommunities = firstsCommunities.countCommunities || 0
+    const countAllCommunitiesAlura = firstsCommunities.countCommunitiesAlura || 0
 
     return {
         props: {
             allCommunities,
-            countAllCommunities
+            allCommunitiesAlura,
+            countAllCommunities,
+            countAllCommunitiesAlura
         },
         revalidate: 900,
     }
