@@ -48,7 +48,7 @@ export async function getUserCommunities(loginGithub, page = 1) {
 }
 
 export async function getAllCommunities(page = 1) {
-  const skip = (page - 1) * 6;
+  const skip = (page - 1) * 15;
 
   const Communities = await fetch(DatoURL, {
     method: 'POST',
@@ -63,10 +63,7 @@ export async function getAllCommunities(page = 1) {
         count
       },
       allCommunities (
-        filter: {
-          creatorSlug: {eq: "${loginGithub}"}
-      },
-      first: 6,
+      first: 15,
       skip: ${skip}
       ) {
         id 

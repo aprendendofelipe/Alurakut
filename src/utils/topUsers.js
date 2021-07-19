@@ -1,4 +1,4 @@
-const pessoasFavoritas = [
+export const pessoasFavoritas = [
     'juunegreiros',
     'omariosouto',
     'peas',

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Head from 'next/head';
+import Head from 'next/head'
 import jwt from 'jsonwebtoken'
 import MainGrid from '../components/MainGrid'
 import Box from '../components/Box'
@@ -15,6 +15,7 @@ import ProfileSidebar from '../components/ProfileSidebar'
 import { UserGithubAPI } from '../services/Github/github'
 import { getUserCommunities } from '../services/Dato/DatoAlura'
 import { pessoasFavoritasOBJList } from '../utils/topUsers'
+import { handleCriaComunidade } from '../services/Dato/Communities'
 
 const Home = (props) => {
   const loginGithub = props.loggedGithubUser.login
@@ -25,7 +26,7 @@ const Home = (props) => {
   // const [seguidores, setSeguidores] = useState([])
   // 0 - Pegar o array de dados do github 
   useEffect(() => {
-    const getAllCommunities = async () => {
+    const getCommunities = async () => {
       // GET
       // fetch(props.loggedGithubUser.followers_url)
       //   .then(function (respostaDoServidor) {
@@ -41,7 +42,7 @@ const Home = (props) => {
         return {
           name: community?.title,
           key: community?.id,
-          href: `/communities/${community?.id}`,
+          href: `/communities`,
           imgSRC: community?.imageUrl
         }
       })
@@ -49,34 +50,9 @@ const Home = (props) => {
       setCountComunidades(countCommunities);
 
     }
-    getAllCommunities()
+    getCommunities()
   }, [])
 
-  function handleCriaComunidade(e) {
-    e.preventDefault();
-    const dadosDoForm = new FormData(e.target);
-
-    const comunidade = {
-      title: dadosDoForm.get('title'),
-      imageUrl: dadosDoForm.get('image'),
-      creatorSlug: loginGithub,
-    }
-
-    fetch('/api/comunidades', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(comunidade)
-    })
-      .then(async (response) => {
-        const dados = await response.json();
-        console.log(dados.registroCriado);
-        const comunidade = dados.registroCriado;
-        const comunidadesAtualizadas = [...comunidades, comunidade];
-        setComunidades(comunidadesAtualizadas)
-      })
-  }
 
   return (
     <>
@@ -108,7 +84,7 @@ const Home = (props) => {
 
           <Box>
             <h2 className="subTitle">O que você deseja fazer?</h2>
-            <form onSubmit={(e) => handleCriaComunidade(e)}>
+            <form onSubmit={(e) => handleCriaComunidade(e, loginGithub)}>
               <div>
                 <input
                   placeholder="Qual vai ser o nome da sua comunidade?"

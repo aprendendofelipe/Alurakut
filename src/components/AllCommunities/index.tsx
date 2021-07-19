@@ -6,7 +6,7 @@ const BoxWrapper = styled(Box)`
       display: grid;
       grid-gap: 8px;
       grid-template-columns: 1fr 1fr 1fr; 
-      max-height: 220px;
+      /* max-height: 220px; */
       list-style: none;
     }
     img {
@@ -51,25 +51,25 @@ const BoxWrapper = styled(Box)`
     }
   `;
 
-export default function ProfileRelationsBoxWrapper({ title, count, list }) {
-  return (
-    <BoxWrapper>
-      <h2 className="smallTitle">
-        {`${title} (${count})`}
-      </h2>
+export default function AllCommunitiesBoxWrapper({ title, count, list }) {
+    return (
+        <BoxWrapper>
+            <h2 className="smallTitle">
+                {`${title} (${count})`}
+            </h2>
 
-      <ul>
-        {list && list.map((item) => {
-          return (
-            <li key={item.key}>
-              <a href={item.href}>
-                <img src={item.imgSRC} />
-                <span>{item.name}</span>
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-    </BoxWrapper>
-  )
+            <ul>
+                {list && list.map((item) => {
+                    return (
+                        <li key={item.key}>
+                            <a href={item.href}>
+                                <img src={item.imgSRC} />
+                                <span>{item.name}</span>
+                            </a>
+                        </li>
+                    )
+                })}
+            </ul>
+        </BoxWrapper>
+    )
 }

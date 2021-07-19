@@ -12,9 +12,9 @@ import { getAllCommunities, getUserCommunities } from '../../../services/Dato/Da
 import firebase from '../../../services/Firebase/firebase'
 import tokenChangedHandler from '../../../services/Firebase/tokenChangedHandler'
 import TestimonialsBoxWrapper from '../../../components/Testimonials'
-import { pessoasFavoritasOBJList } from '../../../utils/topUsers'
+import { pessoasFavoritas, pessoasFavoritasOBJList } from '../../../utils/topUsers'
 
-const Home = (props) => {
+const Profile = (props) => {
   const loginGithub = props.githubUser.login;
   const [comunidades, setComunidades] = useState([]);
   const [countComunidades, setCountComunidades] = useState(0);
@@ -25,7 +25,6 @@ const Home = (props) => {
   const [userLoggedImageSRC, setUserLoggedImageSRC] = useState("");
 
   const router = useRouter()
-
 
   // const [seguidores, setSeguidores] = useState([]);
   // 0 - Pegar o array de dados do github 
@@ -46,7 +45,7 @@ const Home = (props) => {
         return {
           name: community.title,
           key: community.id,
-          href: `/communities/${community.id}`,
+          href: `/communities`,
           imgSRC: community.imageUrl
         }
       })
@@ -54,8 +53,21 @@ const Home = (props) => {
       setCountComunidades(countCommunities);
 
     }
+    setTestimonials(
+      props.testimonials.testimonials.map((item) => {
+        return {
+          name: item.author,
+          key: item.id,
+          href: `/users/${item.author}`,
+          imgSRC: `https://github.com/${item.author}.png`,
+          text: item.text
+        }
+      }))
+
     getAllCommunities()
-  }, [])
+    setCountTestimonials(props.testimonials.countTestimonials)
+
+  }, [router, loginGithub])
 
   async function onIdTokenChange(firebaseUser) {
     if (firebaseUser) {
@@ -67,7 +79,6 @@ const Home = (props) => {
     setToken("")
     await tokenChangedHandler({ email: null })
   }
-
 
   useEffect(() => {
     // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#onidtokenchanged
@@ -117,21 +128,6 @@ const Home = (props) => {
         setCountTestimonials(countTestimonials + 1)
       })
   }
-
-  useEffect(() => {
-    setTestimonials(
-      props.testimonials.testimonials.map((item) => {
-        return {
-          name: item.author,
-          key: item.id,
-          href: `/users/${item.author}`,
-          imgSRC: `https://github.com/${item.author}.png`,
-          text: item.text
-        }
-      }))
-    setCountTestimonials(props.testimonials.countTestimonials)
-
-  }, [router, loginGithub])
 
   return (
     <>
@@ -238,6 +234,8 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   // Get the paths we want to pre-render based on posts
   const paths = []
+  // const paths = pessoasFavoritas
+  console.log("pessoasFavoritas: ", pessoasFavoritas)
 
   // We'll pre-render only these paths at build time.
   // { fallback: blocking } will server-render pages
@@ -245,4 +243,4 @@ export async function getStaticPaths() {
   return { paths, fallback: 'blocking' }
 }
 
-export default Home
+export default Profile
