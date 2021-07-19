@@ -96,14 +96,19 @@ const Home = (props) => {
               {`Bem vindo(a), ${loginGithub}`}
             </h1>
             <p>
-              {props.githubUser.bio}
+              {props.loggedGithubUser.bio}
             </p>
 
             <OrkutNostalgicIconSet />
           </Box>
 
           <Box>
-            <h2 className="subTitle">O que você deseja fazer?</h2>
+            <h2 className="subTitle">Pesquise outros usuários na barra de pesquisa.</h2>
+            <h2 className="subTitle">Escreva seu depoimento no perfil que quiser.</h2>
+            <h2 className="subTitle">Convide seus amigos para ver seu depoimento no perfil deles.</h2>
+          </Box>
+          <Box>
+            <h2 className="subTitle">Crie novas comunidades (se a conta da Alura no Dato voltar a permitir).</h2>
             <form onSubmit={(e) => handleCriaComunidade(e, loginGithub)}>
               <div>
                 <input
