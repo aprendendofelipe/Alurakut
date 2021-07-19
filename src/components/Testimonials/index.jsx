@@ -90,8 +90,8 @@ export default function TestimonialsBoxWrapper({ loginGithub, count, list }) {
               <div>
                 <Link href={item.href}>
                   <img src={item.imgSRC} />
+                  <span>{item.name}</span>
                 </Link>
-                <span>{item.name}</span>
                 <p>{item.text}</p>
               </div>
             </li>)
