@@ -20,19 +20,20 @@ import TestimonialsBoxWrapper from '../components/Testimonials'
 import { getTestemonials } from '../services/Dato/Dato'
 
 const Home = (props) => {
-  const loginGithub = props.loggedGithubUser.login
-  const userLoggedImageSRC = props.loggedGithubUser.avatar_url
+  const loginGithub = props.loggedGitHubUser.login
+  const userLoggedImageSRC = props.loggedGitHubUser.avatar_url
   const [comunidades, setComunidades] = useState([])
   const [countComunidades, setCountComunidades] = useState(0)
-  const [testimonials, setTestimonials] = useState([]);
-  const [countTestimonials, setCountTestimonials] = useState(0);
+  const [testimonials, setTestimonials] = useState([])
+  const [countTestimonials, setCountTestimonials] = useState(0)
+  const [token, setToken] = useState("")
 
   // const [seguidores, setSeguidores] = useState([])
   // 0 - Pegar o array de dados do github 
   useEffect(() => {
     const getCommunities = async () => {
       // GET
-      // fetch(props.loggedGithubUser.followers_url)
+      // fetch(props.loggedGitHubUser.followers_url)
       //   .then(function (respostaDoServidor) {
       //     return respostaDoServidor.json();
       //   })
@@ -96,7 +97,7 @@ const Home = (props) => {
               {`Bem vindo(a), ${loginGithub}`}
             </h1>
             <p>
-              {props.loggedGithubUser.bio}
+              {props.loggedGitHubUser.bio}
             </p>
 
             <OrkutNostalgicIconSet />
@@ -109,7 +110,7 @@ const Home = (props) => {
           </Box>
           <Box>
             <h2 className="subTitle">Crie novas comunidades.</h2>
-            <form onSubmit={(e) => handleCriaComunidade(e, loginGithub)}>
+            <form onSubmit={(e) => handleCriaComunidade(e, loginGithub, comunidades, token)}>
               <div>
                 <input
                   placeholder="Qual vai ser o nome da sua comunidade?"
@@ -135,6 +136,7 @@ const Home = (props) => {
             loginGithub={loginGithub}
             count={countTestimonials}
             list={testimonials}
+            token={useAuthUser().getIdToken()}
           />
         </div>
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
@@ -162,15 +164,15 @@ export const getServerSideProps = withAuthUserTokenSSR({
   const { AuthUser, req } = ctx;
   const token = await AuthUser.getIdToken()
   const { identities } = jwt.decode(token).firebase;
-  const loggedGithubUserID = identities['github.com'][0];
+  const loggedGitHubUserID = identities['github.com'][0];
 
-  const loggedGithubUser = await UserGithubAPI(loggedGithubUserID);
+  const loggedGitHubUser = await UserGithubAPI(loggedGitHubUserID);
 
-  const testimonials = await getTestemonials(loggedGithubUser.login)
+  const testimonials = await getTestemonials(loggedGitHubUser.login)
 
   return {
     props: {
-      loggedGithubUser,
+      loggedGitHubUser,
       testimonials
     },
   }

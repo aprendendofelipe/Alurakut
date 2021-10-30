@@ -15,7 +15,7 @@ export const getAuthUserTokensCookieName = () => {
     return `${baseAuthCookieName}.AuthUserTokens`
 }
 
-export const getGithubUserTokensCookieName = () => {
+export const getGitHubUserTokensCookieName = () => {
     return `dotcom_user`
 }
 

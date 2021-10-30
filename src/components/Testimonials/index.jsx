@@ -1,6 +1,7 @@
-import styled from 'styled-components';
-import Link from '../../utils/Link';
-import Box from '../Box';
+import styled from 'styled-components'
+import Link from '../../utils/Link'
+import Box from '../Box'
+import { handleDelTestimonial } from '../../services/Dato/Testimonials'
 
 const BoxWrapper = styled(Box)`
     ul {
@@ -19,7 +20,7 @@ const BoxWrapper = styled(Box)`
     ul li div {
       display: grid;
       grid-gap: 8px;
-      grid-template-columns: 88px 1fr;
+      grid-template-columns: 88px 1fr 60px;
     }
     ul li a {
       display: inline-block;
@@ -54,14 +55,14 @@ const BoxWrapper = styled(Box)`
         background-image: linear-gradient(0deg,#00000073,transparent);
         }
       }
-      ul li p {
+    
+    ul li p {
       font: 400 14px Arial;
       height: 100%;
       padding: 8px;
       position: relative;
       overflow: hidden;
-      border-radius: 8px;
-      
+      border-radius: 8px;    
       &:after {
         content: "";
         display: block;
@@ -74,9 +75,12 @@ const BoxWrapper = styled(Box)`
         background-image: linear-gradient(0deg,#BBCDE873,transparent);
       }
     }
-  `;
+    ul li button {
+      height: fit-content;
+    }
+`;
 
-export default function TestimonialsBoxWrapper({ loginGithub, count, list }) {
+export default function TestimonialsBoxWrapper({ loginGithub, count, list, token }) {
   return (
     <BoxWrapper>
       <h2 className="smallTitle">
@@ -93,6 +97,9 @@ export default function TestimonialsBoxWrapper({ loginGithub, count, list }) {
                   <span>{item.name}</span>
                 </Link>
                 <p>{item.text}</p>
+                <button onClick={(e) => handleDelTestimonial(e, item.key, token)}>
+                  excluir
+                </button>
               </div>
             </li>)
         })}

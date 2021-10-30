@@ -45,8 +45,11 @@ export async function getUserCommunitiesAlura(loginGithub, page = 1) {
   }
 }
 
-export async function getAllCommunitiesAlura(page = 1) {
-  const skip = (page - 1) * 15;
+export async function getAllCommunitiesAlura(skip = 0, current = []) {
+
+  const current_array = current.map(
+    (title) => `"${title}"`
+  )
 
   const AllCommunitiesAlura = await fetch(DatoURL, {
     method: 'POST',
@@ -62,8 +65,12 @@ export async function getAllCommunitiesAlura(page = 1) {
       },
       allCommunities (
       first: 15,
-      skip: ${skip}
-      ) {
+      skip: ${skip},
+      filter:{
+        creatorSlug: {neq: "omariosouto"}
+        title: {notIn: [${current_array}]
+        }
+      }) {
         id 
         title
         imageUrl

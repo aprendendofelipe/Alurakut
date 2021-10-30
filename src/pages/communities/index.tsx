@@ -18,7 +18,7 @@ import AllCommunitiesBoxWrapper from '../../components/AllCommunities';
 const Communities = (props) => {
     const [comunidades, setComunidades] = useState([]);
     const [countComunidades, setCountComunidades] = useState(0);
-    // const [token, setToken] = useState("");
+    const [token, setToken] = useState("");
     const [loginGithub, setLoginGithub] = useState("");
     const [userLoggedImageSRC, setUserLoggedImageSRC] = useState("");
 
@@ -49,11 +49,12 @@ const Communities = (props) => {
         if (firebaseUser) {
             const photoURL = firebaseUser.photoURL
             setUserLoggedImageSRC(photoURL)
-            const t_token = await firebase.auth().currentUser.getIdToken()
-            // setToken(t_token)
-            const loggedGithubUserID = await jwt.decode(t_token).firebase.identities['github.com'][0]
-            const GithubUserJson = await UserGithubAPI(loggedGithubUserID)
-            setLoginGithub(GithubUserJson.login)
+            setToken(await firebase.auth().currentUser.getIdToken())
+            // const t_token = await firebase.auth().currentUser.getIdToken()
+            // const loggedGitHubUserID = await jwt.decode(t_token).firebase.identities['github.com'][0]
+            const loggedGitHubUserID = firebase.auth().currentUser.providerData[0].uid
+            const GitHubUserJson = await UserGithubAPI(loggedGitHubUserID)
+            setLoginGithub(GitHubUserJson.login)
             return
         }
         // setToken("")
@@ -71,6 +72,11 @@ const Communities = (props) => {
         await firebase.auth().signOut()
         setUserLoggedImageSRC("")
     }
+
+    // async function getMoreCommunities(communitiesNames: string[]) {
+    //     await getAllCommunities(communitiesNames.length, communitiesNames)
+
+    // }
 
     return (
         <>
@@ -99,7 +105,7 @@ const Communities = (props) => {
 
                     <Box>
                         <h2 className="subTitle">Crie novas comunidades.</h2>
-                        <form onSubmit={(e) => handleCriaComunidade(e, loginGithub)}>
+                        <form onSubmit={(e) => handleCriaComunidade(e, loginGithub, comunidades, token)}>
                             <div>
                                 <input
                                     placeholder="Qual vai ser o nome da sua comunidade?"

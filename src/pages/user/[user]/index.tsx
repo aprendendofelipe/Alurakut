@@ -6,7 +6,7 @@ import Box from '../../../components/Box'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../../../lib/AlurakutCommons'
 import ProfileRelationsBoxWrapper from '../../../components/ProfileRelations'
 import ProfileSidebar from '../../../components/ProfileSidebar'
-import { UsersGithubAPI } from '../../../services/Github/github'
+import { UserGithubAPI } from '../../../services/Github/github'
 import { getTestemonials } from '../../../services/Dato/Dato'
 import { getUserCommunities } from '../../../services/Dato/Dato'
 import firebase from '../../../services/Firebase/firebase'
@@ -15,7 +15,7 @@ import TestimonialsBoxWrapper from '../../../components/Testimonials'
 import { pessoasFavoritas, pessoasFavoritasOBJList } from '../../../utils/topUsers'
 
 const Profile = (props) => {
-  const loginGithub = props.githubUser.login;
+  const userProfile = props.githubUser.login;
   const [comunidades, setComunidades] = useState([]);
   const [countComunidades, setCountComunidades] = useState(0);
   const [token, setToken] = useState("");
@@ -39,7 +39,7 @@ const Profile = (props) => {
       //     setSeguidores(respostaCompleta);
       //   })
 
-      const { communities, countCommunities } = await getUserCommunities(loginGithub);
+      const { communities, countCommunities } = await getUserCommunities(userProfile);
 
       const comunidadesOBJList = communities?.map((community) => {
         return {
@@ -67,7 +67,7 @@ const Profile = (props) => {
     getAllCommunities()
     setCountTestimonials(props.testimonials.countTestimonials)
 
-  }, [router, loginGithub])
+  }, [router, userProfile])
 
   async function onIdTokenChange(firebaseUser) {
     if (firebaseUser) {
@@ -103,7 +103,7 @@ const Profile = (props) => {
 
     const testimonial = {
       text: text,
-      receiver: loginGithub,
+      receiver: userProfile,
     }
 
     fetch('/api/testimonials', {
@@ -132,10 +132,10 @@ const Profile = (props) => {
   return (
     <>
       <Head>
-        <title>{`Alurakut | ${loginGithub}`}</title>
+        <title>{`Alurakut | ${userProfile}`}</title>
       </Head>
       <AlurakutMenu
-        loginGithub={loginGithub}
+        loginGithub={userProfile}
         logout={signOut}
         userLoggedImageSRC={userLoggedImageSRC}
       />
@@ -143,7 +143,7 @@ const Profile = (props) => {
         {/* <Box style="grid-area: profileArea;"> */}
         <div className="profileArea" style={{ gridArea: 'profileArea' }}>
           <ProfileSidebar
-            loginGithub={loginGithub}
+            loginGithub={userProfile}
             logout={signOut}
             userLoggedImageSRC={userLoggedImageSRC}
           />
@@ -151,7 +151,7 @@ const Profile = (props) => {
         <div className="welcomeArea" style={{ gridArea: 'welcomeArea' }}>
           <Box>
             <h1 className="title">
-              {loginGithub}
+              {userProfile}
             </h1>
             <p>
               {props.githubUser.bio}
@@ -161,16 +161,16 @@ const Profile = (props) => {
           </Box>
 
           <Box>
-            <h2 className="subTitle">{`Escrever um depoimento para ${loginGithub}:`}</h2>
+            <h2 className="subTitle">{`Escrever um depoimento para ${userProfile}:`}</h2>
             <form onSubmit={(e) => handleAddTestimonial(e)}>
               <div>
                 <textarea
                   disabled={!userLoggedImageSRC}
                   rows={4}
                   className="inputTestimonialArea"
-                  placeholder={`Escreva aqui o seu depoimento para ${loginGithub}...`}
+                  placeholder={`Escreva aqui o seu depoimento para ${userProfile}...`}
                   name="testimonialText"
-                  aria-label={`Escreva aqui o seu depoimento para ${loginGithub}...`}
+                  aria-label={`Escreva aqui o seu depoimento para ${userProfile}...`}
                   value={newTestimonials}
                   onChange={(e) => setNewTestimonials(e.target.value)}
                 />
@@ -193,7 +193,7 @@ const Profile = (props) => {
           </Box>
 
           <TestimonialsBoxWrapper
-            loginGithub={loginGithub}
+            loginGithub={userProfile}
             count={countTestimonials}
             list={testimonials}
             token={token}
@@ -220,7 +220,7 @@ const Profile = (props) => {
 
 export async function getStaticProps({ params }) {
 
-  const githubUser = await UsersGithubAPI(params.user)
+  const githubUser = await UserGithubAPI(params.user)
   const testimonials = await getTestemonials(githubUser.login)
 
   return {

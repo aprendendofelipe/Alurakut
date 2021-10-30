@@ -1,4 +1,4 @@
-export function handleCriaComunidade(e, loginGithub) {
+export function handleCriaComunidade(e, loginGithub, comunidades, token) {
     e.preventDefault();
     const dadosDoForm = new FormData(e.target);
 
@@ -11,6 +11,7 @@ export function handleCriaComunidade(e, loginGithub) {
     fetch('/api/comunidades', {
         method: 'POST',
         headers: {
+            Authorization: token || 'unauthenticated',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(comunidade)
@@ -18,7 +19,7 @@ export function handleCriaComunidade(e, loginGithub) {
         .then(async (response) => {
             const dados = await response.json();
             const comunidade = dados.registroCriado;
-            const comunidadesAtualizadas = [...comunidades, comunidade];
-            setComunidades(comunidadesAtualizadas)
+            // const comunidadesAtualizadas = [...comunidades, comunidade];
+            // setComunidades(comunidadesAtualizadas)
         })
 }

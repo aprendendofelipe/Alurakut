@@ -90,12 +90,7 @@ export async function getUserCommunities(loginGithub, page = 1) {
       return { comunidadesVindasDoDato, countCommunitiesVindasDoDato }
     })
 
-  console.log("CommunitiesDato: ", CommunitiesDato)
-  console.log("UserCommunitiesAlura: ", UserCommunitiesAlura)
-
   const communities = CommunitiesDato.comunidadesVindasDoDato.concat(UserCommunitiesAlura.comunidadesVindasDoDato)
-
-  console.log("Communities: ", communities)
 
   return {
     communities: communities,
@@ -104,10 +99,8 @@ export async function getUserCommunities(loginGithub, page = 1) {
   }
 }
 
-export async function getAllCommunities(page = 1) {
-  const { AllCommunitiesAlura } = await getAllCommunitiesAlura(page)
-
-  const skip = (page - 1) * 15;
+export async function getAllCommunities(skip = 0, current = []) {
+  const { AllCommunitiesAlura } = await getAllCommunitiesAlura(skip, current)
 
   const DatoCommunities = await fetch(DatoURL, {
     method: 'POST',
