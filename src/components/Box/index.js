@@ -41,6 +41,8 @@ const Box = styled.div`
     border: 0;
     padding: 8px;
     margin-bottom: 14px;
+    resize: none;
+    outline: none;
   }
   hr {
     margin-top: 12px;

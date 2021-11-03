@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from '../utils/Link'
 import styled, { css } from 'styled-components'
 import { useRouter } from 'next/dist/client/router';
+import { useLoggedUser } from '../core/hooks';
 
 const BASE_URL = '';
 const v = 1;
@@ -9,7 +10,8 @@ const v = 1;
 // ================================================================================================================
 // Menu
 // ================================================================================================================
-export function AlurakutMenu({ loginGithub, logout, userLoggedImageSRC }) {
+export function AlurakutMenu({ loginGithub }) {
+  const loggedUser = useLoggedUser()
   const [isMenuOpen, setMenuState] = useState(false);
   const [search, setSearch] = useState("");
   const router = useRouter()
@@ -38,10 +40,10 @@ export function AlurakutMenu({ loginGithub, logout, userLoggedImageSRC }) {
         </nav>
 
         <nav>
-          {userLoggedImageSRC
+          {loggedUser.gitHubUserId
             ? (<>
               <img
-                src={userLoggedImageSRC}
+                src={loggedUser.photoURL}
                 style={{
                   maxHeight: '30px',
                   borderRadius: '8px',
@@ -49,7 +51,7 @@ export function AlurakutMenu({ loginGithub, logout, userLoggedImageSRC }) {
                 }}
               />
               <a
-                onClick={logout}
+                onClick={loggedUser.signOut}
               >
                 Sair
               </a>
@@ -203,14 +205,14 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
   return (
     <div className="alurakutMenuProfileSidebar">
       <div>
-        <img src={`https://github.com/${githubUser}.png`} style={{
+        <img src={githubUser?.avatar_url} style={{
           borderRadius: '8px',
           margin: 'auto'
         }} />
         <hr />
         <p>
-          <a className="boxLink" href={`https://github.com/${githubUser}`} target="_blank" >
-            @{githubUser}
+          <a className="boxLink" href={`https://github.com/${githubUser?.login}`} target="_blank" >
+            {githubUser?.login}
           </a>
         </p>
         <hr />
@@ -224,11 +226,12 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
 // ================================================================================================================
 // AlurakutProfileSidebarMenuDefault
 // ================================================================================================================
-export function AlurakutProfileSidebarMenuDefault({ logout, userLoggedImageSRC }) {
+export function AlurakutProfileSidebarMenuDefault({ loginGithub }) {
+  const loggedUser = useLoggedUser()
   return (
     <AlurakutProfileSidebarMenuDefault.Wrapper>
       <nav>
-        <a href={userLoggedImageSRC} target="_blank">
+        <a href={`https://github.com/${loginGithub?.login}`} target="_blank">
           <img src={`${BASE_URL}/icons/user.svg`} />
           Perfil
         </a>
@@ -251,9 +254,9 @@ export function AlurakutProfileSidebarMenuDefault({ logout, userLoggedImageSRC }
           <img src={`${BASE_URL}/icons/plus.svg`} />
           GitHub Trends
         </a>
-        {userLoggedImageSRC
+        {loggedUser.gitHubUserId
           ? (<>
-            <a onClick={logout}             >
+            <a onClick={loggedUser?.signOut}             >
               <img src={`${BASE_URL}/icons/logout.svg`} />
               Sair
             </a>

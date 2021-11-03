@@ -1,47 +1,35 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import {
+  withAuthUser,
+  withAuthUserTokenSSR,
+  AuthAction
+} from 'next-firebase-auth'
 import jwt from 'jsonwebtoken'
 import MainGrid from '../components/MainGrid'
 import Box from '../components/Box'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../lib/AlurakutCommons'
 import ProfileRelationsBoxWrapper from '../components/ProfileRelations'
-import {
-  withAuthUser,
-  withAuthUserTokenSSR,
-  AuthAction,
-  useAuthUser,
-} from 'next-firebase-auth'
 import ProfileSidebar from '../components/ProfileSidebar'
-import { UserGithubAPI } from '../services/Github/github'
 import { getUserCommunities } from '../services/Dato/Dato'
 import { pessoasFavoritasOBJList } from '../utils/topUsers'
 import { handleCriaComunidade } from '../services/Dato/Communities'
 import TestimonialsBoxWrapper from '../components/Testimonials'
-import { getTestemonials } from '../services/Dato/Dato'
+import { getServerProps } from '../services/Vercel/serverside'
+import { useGitHubUserAPI, useLoggedUser } from '../core/hooks'
 
 const Home = (props) => {
-  const loginGithub = props.loggedGitHubUser.login
-  const userLoggedImageSRC = props.loggedGitHubUser.avatar_url
+  const loggedUser = useLoggedUser(props.userProfile)
+  const gitHubUser = useGitHubUserAPI(loggedUser?.gitHubUserId, props.userProfile)
+  const userName = gitHubUser.name || loggedUser?.displayName || gitHubUser.login
   const [comunidades, setComunidades] = useState([])
   const [countComunidades, setCountComunidades] = useState(0)
-  const [testimonials, setTestimonials] = useState([])
-  const [countTestimonials, setCountTestimonials] = useState(0)
-  const [token, setToken] = useState("")
 
-  // const [seguidores, setSeguidores] = useState([])
-  // 0 - Pegar o array de dados do github 
+
   useEffect(() => {
     const getCommunities = async () => {
-      // GET
-      // fetch(props.loggedGitHubUser.followers_url)
-      //   .then(function (respostaDoServidor) {
-      //     return respostaDoServidor.json();
-      //   })
-      //   .then(function (respostaCompleta) {
-      //     setSeguidores(respostaCompleta);
-      //   })
 
-      const { communities, countCommunities } = await getUserCommunities(loginGithub);
+      const { communities, countCommunities } = await getUserCommunities(gitHubUser.login);
 
       const comunidadesOBJList = communities?.map((community) => {
         return {
@@ -56,48 +44,30 @@ const Home = (props) => {
 
     }
     getCommunities()
-
-    setTestimonials(
-      props.testimonials.testimonials.map((item) => {
-        return {
-          name: item.author,
-          key: item.id,
-          href: `/users/${item.author}`,
-          imgSRC: `https://github.com/${item.author}.png`,
-          text: item.text
-        }
-      }))
-    setCountTestimonials(props.testimonials.countTestimonials)
-
   }, [])
-
 
   return (
     <>
       <Head>
-        <title>{`Alurakut | ${loginGithub}`}</title>
+        <title>{`Alurakut | ${gitHubUser.login}`}</title>
       </Head>
       <AlurakutMenu
-        loginGithub={loginGithub}
-        logout={useAuthUser().signOut}
-        userLoggedImageSRC={userLoggedImageSRC}
+        loginGithub={gitHubUser}
       />
       <MainGrid>
         {/* <Box style="grid-area: profileArea;"> */}
         <div className="profileArea" style={{ gridArea: 'profileArea' }}>
           <ProfileSidebar
-            loginGithub={loginGithub}
-            logout={useAuthUser().signOut}
-            userLoggedImageSRC={userLoggedImageSRC}
+            loginGithub={gitHubUser}
           />
         </div>
         <div className="welcomeArea" style={{ gridArea: 'welcomeArea' }}>
           <Box>
             <h1 className="title">
-              {`Bem vindo(a), ${loginGithub}`}
+              {`Bem vindo(a), ${userName}`}
             </h1>
             <p>
-              {props.loggedGitHubUser.bio}
+              {props.userProfile.bio}
             </p>
 
             <OrkutNostalgicIconSet />
@@ -110,7 +80,7 @@ const Home = (props) => {
           </Box>
           <Box>
             <h2 className="subTitle">Crie novas comunidades.</h2>
-            <form onSubmit={(e) => handleCriaComunidade(e, loginGithub, comunidades, token)}>
+            <form onSubmit={(e) => handleCriaComunidade(e, gitHubUser.login, comunidades, token, setComunidades)}>
               <div>
                 <input
                   placeholder="Qual vai ser o nome da sua comunidade?"
@@ -133,10 +103,8 @@ const Home = (props) => {
             </form>
           </Box>
           <TestimonialsBoxWrapper
-            loginGithub={loginGithub}
-            count={countTestimonials}
-            list={testimonials}
-            token={useAuthUser().getIdToken()}
+            userProfile={gitHubUser}
+            list={props.testimonials}
           />
         </div>
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
@@ -161,21 +129,12 @@ const Home = (props) => {
 export const getServerSideProps = withAuthUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })(async (ctx) => {
-  const { AuthUser, req } = ctx;
+  const { AuthUser, req } = ctx
   const token = await AuthUser.getIdToken()
-  const { identities } = jwt.decode(token).firebase;
-  const loggedGitHubUserID = identities['github.com'][0];
+  const { identities } = jwt.decode(token).firebase
+  const loggedGitHubUserID = identities['github.com'][0]
 
-  const loggedGitHubUser = await UserGithubAPI(loggedGitHubUserID);
-
-  const testimonials = await getTestemonials(loggedGitHubUser.login)
-
-  return {
-    props: {
-      loggedGitHubUser,
-      testimonials
-    },
-  }
+  return await getServerProps({ uid: loggedGitHubUserID, login: '' })
 })
 
 export default withAuthUser({

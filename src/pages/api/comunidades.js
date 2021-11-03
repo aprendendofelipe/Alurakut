@@ -1,6 +1,9 @@
 import { verifyIdToken } from 'next-firebase-auth'
 import { SiteClient } from 'datocms-client'
 import { getGitHubUserAuth } from '../../services/Github/github'
+import initFirebase from '../../services/Firebase/initFirebase'
+
+initFirebase()
 
 const COMMUNITIES_ITEM_TYPE = "980113" // ID do Model de "Communities" criado pelo Dato
 const DATO_TOKEN = process.env.DATO_FULL_ACCESS_TOKEN

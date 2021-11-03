@@ -2,11 +2,10 @@
 import Box from '../Box'
 import { AlurakutProfileSidebarMenuDefault } from '../../lib/AlurakutCommons';
 
-export default function ProfileSidebar(props) {
-
+export default function ProfileSidebar({ loginGithub }) {
     return (
         <Box as="aside">
-            <img src={`https://github.com/${props.loginGithub}.png`} style={{
+            <img src={loginGithub?.avatar_url} style={{
                 borderRadius: '8px',
                 margin: 'auto'
             }} />
@@ -15,15 +14,17 @@ export default function ProfileSidebar(props) {
             <p>
                 <a
                     className="boxLink"
-                    href={`https://github.com/${props.loginGithub}`}
+                    href={`https://github.com/${loginGithub?.login}`}
                     target="_blank"
                 >
-                    {props.loginGithub}
+                    {loginGithub?.login}
                 </a>
             </p>
             <hr />
 
-            <AlurakutProfileSidebarMenuDefault logout={props.logout} userLoggedImageSRC={props.userLoggedImageSRC} />
+            <AlurakutProfileSidebarMenuDefault
+                loginGithub={loginGithub}
+            />
         </Box>
     )
 }

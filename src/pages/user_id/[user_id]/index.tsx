@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import { useRouter } from 'next/dist/client/router';
+import { useRouter } from 'next/dist/client/router'
 import MainGrid from '../../../components/MainGrid'
 import Box from '../../../components/Box'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../../../lib/AlurakutCommons'
@@ -9,11 +9,10 @@ import ProfileSidebar from '../../../components/ProfileSidebar'
 import { getUserCommunities } from '../../../services/Dato/Dato'
 import TestimonialsBoxWrapper from '../../../components/Testimonials'
 import { pessoasFavoritasOBJList } from '../../../utils/topUsers'
-import { getServerProps } from '../../../services/Vercel/serverside';
-import { useGitHubUserAPI } from '../../../core/hooks';
+import { getServerProps } from '../../../services/Vercel/serverside'
+import { useGitHubUserAPI } from '../../../core/hooks'
 
 const Profile = (props) => {
-
   const userProfile = useGitHubUserAPI(props.userProfile.id, props.userProfile)
   const [comunidades, setComunidades] = useState([])
   const [countComunidades, setCountComunidades] = useState(0)
@@ -23,7 +22,7 @@ const Profile = (props) => {
   useEffect(() => {
     const getAllCommunities = async () => {
 
-      const { communities, countCommunities } = await getUserCommunities(userProfile);
+      const { communities, countCommunities } = await getUserCommunities(userProfile.login);
 
       const comunidadesOBJList = communities?.map((community) => {
         return {
@@ -37,9 +36,7 @@ const Profile = (props) => {
       setCountComunidades(countCommunities);
 
     }
-
     getAllCommunities()
-
   }, [router, userProfile])
 
   return (
@@ -94,7 +91,7 @@ const Profile = (props) => {
 
 export async function getStaticProps({ params }) {
   return {
-    ...await getServerProps({ uid: '', login: params.user }),
+    ...await getServerProps({ uid: params.user_id, login: '' }),
     revalidate: 5
   }
 }
