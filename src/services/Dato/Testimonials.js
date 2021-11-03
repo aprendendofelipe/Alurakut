@@ -91,39 +91,3 @@ export async function getTestemonialsById(UserIdGithub, page = 1) {
         countTestimonials: testimonials.countTesTimonialsVindasDoDato
     }
 }
-
-export async function AddTestimonial(testimonial, authorization) {
-    const testimonialCreated = await fetch('/api/testimonials', {
-        method: 'POST',
-        headers: {
-            Authorization: authorization || 'unauthenticated',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(testimonial)
-    })
-        .then((response) => response.json())
-        .then((respostaCompleta) => {
-            return respostaCompleta
-        })
-    return testimonialCreated
-}
-
-
-export async function DelTestimonial(itemId, authorization) {
-    const testimonial = { id: itemId }
-
-    const testimonialDeleted = await fetch('/api/testimonials', {
-        method: 'DELETE',
-        headers: {
-            Authorization: authorization || 'unauthenticated',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(testimonial)
-    })
-        .then((response) => response.json())
-        .then((respostaCompleta) => {
-            return respostaCompleta
-        })
-        .catch(e => e)
-    return testimonialDeleted
-}

@@ -11,12 +11,12 @@ import Box from '../components/Box'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../lib/AlurakutCommons'
 import ProfileRelationsBoxWrapper from '../components/ProfileRelations'
 import ProfileSidebar from '../components/ProfileSidebar'
-import { getUserCommunities } from '../services/Dato/Dato'
+import { getUserCommunities } from '../services/Dato/Communities'
 import { pessoasFavoritasOBJList } from '../utils/topUsers'
-import { handleCriaComunidade } from '../services/Dato/Communities'
 import TestimonialsBoxWrapper from '../components/Testimonials'
 import { getServerProps } from '../services/Vercel/serverside'
 import { useGitHubUserAPI, useLoggedUser } from '../core/hooks'
+import { NewCommunityBox } from '../components/Communities'
 
 const Home = (props) => {
   const loggedUser = useLoggedUser(props.userProfile)
@@ -78,30 +78,8 @@ const Home = (props) => {
             <h2 className="subTitle">Escreva seu depoimento no perfil que quiser.</h2>
             <h2 className="subTitle">Convide seus amigos para ver seu depoimento no perfil deles.</h2>
           </Box>
-          <Box>
-            <h2 className="subTitle">Crie novas comunidades.</h2>
-            <form onSubmit={(e) => handleCriaComunidade(e, gitHubUser.login, comunidades, token, setComunidades)}>
-              <div>
-                <input
-                  placeholder="Qual vai ser o nome da sua comunidade?"
-                  name="title"
-                  aria-label="Qual vai ser o nome da sua comunidade?"
-                  type="text"
-                />
-              </div>
-              <div>
-                <input
-                  placeholder="Coloque uma URL para usarmos de capa"
-                  name="image"
-                  aria-label="Coloque uma URL para usarmos de capa"
-                />
-              </div>
 
-              <button>
-                Criar comunidade
-              </button>
-            </form>
-          </Box>
+          <NewCommunityBox />
           <TestimonialsBoxWrapper
             userProfile={gitHubUser}
             list={props.testimonials}

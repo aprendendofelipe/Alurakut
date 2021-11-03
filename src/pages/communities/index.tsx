@@ -3,14 +3,13 @@ import Head from 'next/head'
 import { useRouter } from 'next/dist/client/router';
 import MainGrid from '../../components/MainGrid'
 import Box from '../../components/Box'
-import { AlurakutMenu, OrkutNostalgicIconSet } from '../../lib/AlurakutCommons'
+import { AlurakutMenu } from '../../lib/AlurakutCommons'
 import ProfileRelationsBoxWrapper from '../../components/ProfileRelations'
 import ProfileSidebar from '../../components/ProfileSidebar'
-import { getAllCommunities, getUserCommunities } from '../../services/Dato/Dato'
+import { getAllCommunities, getUserCommunities } from '../../services/Dato/Communities'
 import { pessoasFavoritasOBJList } from '../../utils/topUsers'
-import { handleCriaComunidade } from '../../services/Dato/Communities'
-import AllCommunitiesBoxWrapper from '../../components/AllCommunities';
-import { useGitHubUserAPI, useLoggedUser } from '../../core/hooks';
+import { AllCommunitiesBox, NewCommunityBox } from '../../components/Communities'
+import { useGitHubUserAPI, useLoggedUser } from '../../core/hooks'
 
 const Communities = (props) => {
     const loggedUser = useLoggedUser()
@@ -64,41 +63,16 @@ const Communities = (props) => {
                 <div className="welcomeArea" style={{ gridArea: 'welcomeArea' }}>
                     <Box>
                         <h1 className="title">Comunidades</h1>
-
-                        <OrkutNostalgicIconSet />
                     </Box>
 
-                    <Box>
-                        <h2 className="subTitle">Crie novas comunidades.</h2>
-                        <form onSubmit={(e) => handleCriaComunidade(e, gitHubUser.login, comunidades, token, setComunidades)}>
-                            <div>
-                                <input
-                                    placeholder="Qual vai ser o nome da sua comunidade?"
-                                    name="title"
-                                    aria-label="Qual vai ser o nome da sua comunidade?"
-                                    type="text"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    placeholder="Coloque uma URL para usarmos de capa"
-                                    name="image"
-                                    aria-label="Coloque uma URL para usarmos de capa"
-                                />
-                            </div>
+                    <NewCommunityBox />
 
-                            <button>
-                                Criar comunidade
-                            </button>
-                        </form>
-                    </Box>
-
-                    <AllCommunitiesBoxWrapper
+                    <AllCommunitiesBox
                         title="Todas as Comunidades"
                         list={props.allCommunities}
                         count={props.countAllCommunities}
                     />
-                    <AllCommunitiesBoxWrapper
+                    <AllCommunitiesBox
                         title="Todas as Comunidades no Dato da Alura"
                         list={props.allCommunitiesAlura}
                         count={props.countAllCommunitiesAlura}
@@ -112,7 +86,7 @@ const Communities = (props) => {
                         count={pessoasFavoritasOBJList.length}
                     />
                     <ProfileRelationsBoxWrapper
-                        title="Comunidades"
+                        title={`Comunidades de ${gitHubUser.login}`}
                         list={comunidades}
                         count={countComunidades}
                     />

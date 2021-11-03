@@ -16,9 +16,11 @@ export default async function recebedorDeRequests(req, res) {
         }
 
         const token = req.headers.authorization
-        await verifyIdToken(token)
-
-
+        try {
+            await verifyIdToken(token)
+        } catch (err) {
+            return res.status(403).json(err)
+        }
         const client = new SiteClient(DATO_TOKEN)
         const githubUserID = getIdGitHubUserAuth(token)
 
@@ -67,6 +69,6 @@ export default async function recebedorDeRequests(req, res) {
             message: 'Ainda não temos nada no GET'
         })
     } catch (error) {
-        return res.status(error.statusCode).json({ error: error.message })
+        return res.status(error.statusCode).json(error)
     }
 }

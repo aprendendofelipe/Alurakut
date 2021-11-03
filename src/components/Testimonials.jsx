@@ -3,8 +3,7 @@ import { useRouter } from 'next/dist/client/router'
 import styled from 'styled-components'
 import Link from '../utils/Link'
 import Box from './Box'
-import { AddTestimonial, DelTestimonial } from '../services/Dato/Testimonials'
-import { AddReport, CancelReport } from '../services/Dato/Report'
+import { AddTestimonial, DelTestimonial, AddReport, CancelReport } from '../core/apis'
 import { useGitHubUserAPI, useLoggedUser } from '../core/hooks'
 
 const TestimonialsBoxWrapper = ({ userProfile, list }) => {
@@ -31,11 +30,6 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
     setCountTestimonials(list.countTestimonials)
   }, [list])
 
-
-  async function getToken() {
-    const token = await loggedUser.getIdToken()
-    return token
-  }
 
   function updateTestimonials(testimonial) {
     setTestimonials([
@@ -74,12 +68,11 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
 
       setTestimonials([newTestimonial, ...testimonials])
       setCountTestimonials(countTestimonials + 1)
-      const token = await getToken()
-      const createdTestimonial = await AddTestimonial(testimonial, token)
+      const createdTestimonial = await AddTestimonial(testimonial, loggedUser)
 
       if (createdTestimonial.error) {
-        console.error(createdTestimonial)
         setTestimonials(testimonials.filter(item => item.key != newTestimonial.key))
+        console.error(createdTestimonial)
       } else {
         const savedTestimonial = {
           name: createdTestimonial.author,
@@ -100,15 +93,14 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
 
   async function handleDelTestimonial(e, itemId) {
     e.preventDefault();
-    const token = await getToken()
     let toDelete = testimonials.filter(item => item.key == itemId)[0]
     setTestimonials(testimonials.filter(item => item.key != itemId))
     setCountTestimonials(countTestimonials - 1)
-    const deleted = await DelTestimonial(itemId, token)
+    const deleted = await DelTestimonial(itemId, loggedUser)
     if (deleted?.id != toDelete?.key) {
-      console.error(deleted)
       updateTestimonials(toDelete)
       setCountTestimonials(countTestimonials + 1)
+      console.error(deleted)
     }
   }
 
@@ -117,14 +109,13 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
     let toReport = testimonials.filter(item => item.key == itemId)[0]
     toReport.report = 'pending'
     updateTestimonials(toReport)
-    const token = await getToken()
     const report = { itemId: itemId, text: '' }
-    const reported = await AddReport(report, token)
+    const reported = await AddReport(report, loggedUser)
     if (reported?.postid == itemId) {
       toReport.report = Number(reported.id)
     } else {
-      console.error(reported)
       toReport.report = 'report error'
+      console.error(reported)
     }
     updateTestimonials(toReport)
   }
@@ -136,13 +127,12 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
     const reportId = toCancelReport.report
     toCancelReport.report = 'canceling'
     updateTestimonials(toCancelReport)
-    const token = await getToken()
-    const reportCanceled = await CancelReport(reportId.toString(), token)
+    const reportCanceled = await CancelReport(reportId.toString(), loggedUser)
     if (reportCanceled?.id == reportId) {
       toCancelReport.report = 'canceled'
     } else {
-      console.error(reportCanceled)
       toCancelReport.report = reportId
+      console.error(reportCanceled)
     }
     updateTestimonials(toCancelReport)
   }
@@ -198,14 +188,14 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
             />
           </div>
 
-          {loggedUser
+          {loggedUser?.gitHubUserId
             ? <button>Postar</button>
             : null
           }
 
         </form>
 
-        {loggedUser
+        {loggedUser?.gitHubUserId
           ? null
           : (<button onClick={() => { router.push("/login") }}
           >
