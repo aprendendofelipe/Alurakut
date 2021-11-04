@@ -40,8 +40,7 @@ const Profile = (props) => {
 
     getAllCommunities()
 
-  }, [])
-  // }, [router, userProfile])
+  }, [router, userProfile])
 
   return (
     <>
