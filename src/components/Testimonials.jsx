@@ -177,7 +177,7 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
         <form onSubmit={(e) => handleAddTestimonial(e)}>
           <div>
             <textarea
-              disabled={!loggedUser}
+              disabled={!loggedUser?.gitHubUserId}
               rows={4}
               className="inputTestimonialArea"
               placeholder={`Escreva aqui o seu depoimento para ${userProfile.login}...`}
