@@ -15,8 +15,11 @@ export default async function recebedorDeReqs(req, res) {
         }
 
         const token = req.headers.authorization
-        let a = await verifyIdToken(token)
-        console.log('verifyIdToken', a)
+        try {
+            await verifyIdToken(token)
+        } catch (err) {
+            return res.status(403).json(err)
+        }
 
         const client = new SiteClient(DATO_TOKEN);
         const githubUserAuth = await getGitHubUserAuth(token)
@@ -45,6 +48,6 @@ export default async function recebedorDeReqs(req, res) {
             message: 'Ainda não temos nada no GET, mas no POST tem!'
         })
     } catch (error) {
-        return res.status(error.statusCode).json({ error: error.message })
+        return res.status(error.statusCode).json(error)
     }
 }

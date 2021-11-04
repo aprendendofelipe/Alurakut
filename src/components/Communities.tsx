@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useLoggedUser } from '../core/hooks';
 import Link from '../utils/Link';
 import Box from './Box';
-import { AddCommunity, DelCommunity, AddReport, CancelReport } from '../core/apis'
+import { AddCommunity, DelCommunity, AddReport, CancelReport } from '../core/apis_clients'
 
 export function AllCommunitiesBox({ title, count, list }) {
   return (

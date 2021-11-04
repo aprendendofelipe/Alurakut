@@ -3,7 +3,7 @@ import { useRouter } from 'next/dist/client/router'
 import styled from 'styled-components'
 import Link from '../utils/Link'
 import Box from './Box'
-import { AddTestimonial, DelTestimonial, AddReport, CancelReport } from '../core/apis'
+import { AddTestimonial, DelTestimonial, AddReport, CancelReport } from '../core/apis_clients'
 import { useGitHubUserAPI, useLoggedUser } from '../core/hooks'
 
 const TestimonialsBoxWrapper = ({ userProfile, list }) => {

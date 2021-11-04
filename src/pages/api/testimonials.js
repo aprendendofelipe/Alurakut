@@ -3,6 +3,7 @@ import { SiteClient } from 'datocms-client'
 import { getGitHubUser, UsersGithubAPI } from '../../services/Github/github'
 import initFirebase from '../../services/Firebase/initFirebase'
 import getIdGitHubUserAuth from '../../services/Firebase/github_firebase'
+import { datoRes } from '../../services/Dato/ServerSide'
 
 initFirebase()
 
@@ -72,3 +73,10 @@ export default async function recebedorDeRequests(req, res) {
         return res.status(error.statusCode).json(error)
     }
 }
+
+// export default async function recebedorDeRequests(req, res) {
+//     const postValidator = (UserAuth, body) => {}
+//     const deleteValidator = (UserAuth, body) => {}
+
+//     return datoReqs(req, res, postValidator, deleteValidator)
+// }
