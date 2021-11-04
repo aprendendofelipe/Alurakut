@@ -23,7 +23,7 @@ const Profile = (props) => {
   useEffect(() => {
     const getAllCommunities = async () => {
 
-      const { communities, countCommunities } = await getUserCommunities(userProfile);
+      const { communities, countCommunities } = await getUserCommunities(userProfile.login);
 
       const comunidadesOBJList = communities?.map((community) => {
         return {
@@ -40,7 +40,8 @@ const Profile = (props) => {
 
     getAllCommunities()
 
-  }, [router, userProfile])
+  }, [])
+  // }, [router, userProfile])
 
   return (
     <>
