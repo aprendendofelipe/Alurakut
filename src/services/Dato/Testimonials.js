@@ -2,17 +2,17 @@ const DatoAuthorizationAlurakut = process.env.NEXT_PUBLIC_DATO_READ_ONLY
 const DatoURL = process.env.NEXT_PUBLIC_DATO_URL
 
 export async function getTestemonials(loginGithub, page = 1) {
-    const skip = (page - 1) * 10;
+  const skip = (page - 1) * 10;
 
-    const testimonials = await fetch(DatoURL, {
-        method: 'POST',
-        headers: {
-            'Authorization': DatoAuthorizationAlurakut,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            "query": `query  {
+  const testimonials = await fetch(DatoURL, {
+    method: 'POST',
+    headers: {
+      'Authorization': DatoAuthorizationAlurakut,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+      "query": `query  {
         _allTestimonialsMeta (
           filter: {
             receiver: {eq: "${loginGithub}"}
@@ -23,8 +23,8 @@ export async function getTestemonials(loginGithub, page = 1) {
         filter: {
           receiver: {eq: "${loginGithub}"}
       },
-      first: 10,
-      skip: ${skip}
+      skip: ${skip},
+      orderBy: id_DESC
       ) {
         id 
         author
@@ -33,32 +33,32 @@ export async function getTestemonials(loginGithub, page = 1) {
         text
       }
     }` })
+  })
+    .then((response) => response.json()) // Pega o retorno do response.json() e já retorna
+    .then((respostaCompleta) => {
+      const testimonialsVindasDoDato = respostaCompleta.data.allTestimonials || [];
+      const countTesTimonialsVindasDoDato = respostaCompleta.data._allTestimonialsMeta?.count || 0;
+      return { testimonialsVindasDoDato, countTesTimonialsVindasDoDato }
     })
-        .then((response) => response.json()) // Pega o retorno do response.json() e já retorna
-        .then((respostaCompleta) => {
-            const testimonialsVindasDoDato = respostaCompleta.data.allTestimonials || [];
-            const countTesTimonialsVindasDoDato = respostaCompleta.data._allTestimonialsMeta?.count || 0;
-            return { testimonialsVindasDoDato, countTesTimonialsVindasDoDato }
-        })
 
-    return {
-        testimonials: testimonials.testimonialsVindasDoDato,
-        countTestimonials: testimonials.countTesTimonialsVindasDoDato
-    }
+  return {
+    testimonials: testimonials.testimonialsVindasDoDato,
+    countTestimonials: testimonials.countTesTimonialsVindasDoDato
+  }
 }
 
 export async function getTestemonialsById(UserIdGithub, page = 1) {
-    const skip = (page - 1) * 10;
+  const skip = (page - 1) * 10;
 
-    const testimonials = await fetch(DatoURL, {
-        method: 'POST',
-        headers: {
-            'Authorization': DatoAuthorizationAlurakut,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            "query": `query  {
+  const testimonials = await fetch(DatoURL, {
+    method: 'POST',
+    headers: {
+      'Authorization': DatoAuthorizationAlurakut,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+      "query": `query  {
           _allTestimonialsMeta (
             filter: {
               receiverId: {eq: "${UserIdGithub}"}
@@ -69,8 +69,8 @@ export async function getTestemonialsById(UserIdGithub, page = 1) {
           filter: {
             receiverId: {eq: "${UserIdGithub}"}
         },
-        first: 10,
-        skip: ${skip}
+        skip: ${skip},
+        orderBy: id_DESC
         ) {
           id 
           author
@@ -79,15 +79,15 @@ export async function getTestemonialsById(UserIdGithub, page = 1) {
           text
         }
       }` })
+  })
+    .then((response) => response.json()) // Pega o retorno do response.json() e já retorna
+    .then((respostaCompleta) => {
+      const testimonialsVindasDoDato = respostaCompleta.data.allTestimonials || [];
+      const countTesTimonialsVindasDoDato = respostaCompleta.data._allTestimonialsMeta?.count || 0;
+      return { testimonialsVindasDoDato, countTesTimonialsVindasDoDato }
     })
-        .then((response) => response.json()) // Pega o retorno do response.json() e já retorna
-        .then((respostaCompleta) => {
-            const testimonialsVindasDoDato = respostaCompleta.data.allTestimonials || [];
-            const countTesTimonialsVindasDoDato = respostaCompleta.data._allTestimonialsMeta?.count || 0;
-            return { testimonialsVindasDoDato, countTesTimonialsVindasDoDato }
-        })
-    return {
-        testimonials: testimonials.testimonialsVindasDoDato,
-        countTestimonials: testimonials.countTesTimonialsVindasDoDato
-    }
+  return {
+    testimonials: testimonials.testimonialsVindasDoDato,
+    countTestimonials: testimonials.countTesTimonialsVindasDoDato
+  }
 }
