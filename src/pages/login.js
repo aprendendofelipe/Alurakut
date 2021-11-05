@@ -14,9 +14,13 @@ const LoginPage = () => {
           <section className="logoArea">
             <img src="/logo.svg" />
 
-            <p><strong>Conecte-se</strong> aos seus amigos desenvolvedores de deixe seus depoimentos</p>
-            <p><strong>Conheça</strong> novas pessoas através de amigos de seus amigos e comunidades</p>
-            <p><strong>Compartilhe</strong> seus projetos em um só lugar</p>
+            <p><strong>Conecte-se</strong> aos seus amigos desenvolvedores.</p>
+            <p><strong>Pesquise</strong> outros usuários pela barra de pesquisa.</p>
+            <p><strong>Escreva</strong> seu depoimento no perfil que quiser.</p>
+            <p><strong>Convide</strong> seus amigos para ver seu depoimento.</p>
+
+            {/* <p><strong>Conheça</strong> novas pessoas através de amigos de seus amigos e comunidades</p>
+            <p><strong>Compartilhe</strong> seus projetos em um só lugar</p> */}
           </section>
 
           <section className="formArea">
@@ -32,6 +36,7 @@ const LoginPage = () => {
               <p>
                 Ainda não é membro? <br />
                 <Link href="/users/aprendendofelipe">
+                  <br />
                   <strong>
                     ENTRAR JÁ
                   </strong>
