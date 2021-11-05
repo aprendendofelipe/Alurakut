@@ -9,7 +9,7 @@ import { useGitHubUserAPI, useLoggedUser } from '../core/hooks'
 const TestimonialsBoxWrapper = ({ userProfile, list }) => {
   const [testimonials, setTestimonials] = useState([])
   const [countTestimonials, setCountTestimonials] = useState(list.countTestimonials)
-  const [newTextTestimonials, setNewTextTestimonials] = useState("")
+  const [newTextTestimonials, setNewTextTestimonials] = useState('')
   const loggedUser = useLoggedUser()
   const loggedGitHubUser = useGitHubUserAPI(loggedUser?.gitHubUserId)
   const router = useRouter()
@@ -29,6 +29,10 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
       }))
     setCountTestimonials(list.countTestimonials)
   }, [list])
+
+  useEffect(() => {
+    setNewTextTestimonials('')
+  }, [router])
 
 
   function updateTestimonials(testimonial) {
