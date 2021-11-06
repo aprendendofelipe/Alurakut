@@ -18,7 +18,7 @@ export function useLoggedUser(gitHubUser) {
 
     async function onIdTokenChange(firebaseUser) {
         if (firebaseUser) {
-            if (!loggedUser?.gitHubUserId) {
+            if (!loggedUser.gitHubUserId) {
                 const loggedUserObj = {
                     displayName: firebaseUser.displayName || firebaseUser.providerData[0].displayName,
                     gitHubUserId: firebaseUser.providerData[0].uid,
@@ -29,7 +29,7 @@ export function useLoggedUser(gitHubUser) {
                 setLoggedUser(loggedUserObj)
             }
         } else {
-            if (!loggedUser?.gitHubUserId) {
+            if (!loggedUser.gitHubUserId) {
                 setLoggedUser(defaultUser())
             }
             await tokenChangedHandler({ email: null })

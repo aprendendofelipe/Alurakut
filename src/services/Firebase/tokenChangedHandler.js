@@ -3,8 +3,6 @@ const tokenChangedHandler = async (authUser) => {
     const LOGIN_API_ENDPOINT = '/api/login'
     const LOGOUT_API_ENDPOINT = '/api/logout'
 
-    const loginAPIEndpoint = LOGIN_API_ENDPOINT
-    const logoutAPIEndpoint = LOGOUT_API_ENDPOINT
     const auxCookieName = process.env.NEXT_PUBLIC_APP_NAME + '.AuthUserAux'
 
     const setCookie = function (key, cvalue, maxAge) {
@@ -37,7 +35,7 @@ const tokenChangedHandler = async (authUser) => {
         setCookie(auxCookieName, expTime, expTime)
 
         if (cValue !== expTime) {
-            const response = await fetch(loginAPIEndpoint, {
+            const response = await fetch(LOGIN_API_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     Authorization: idToken.token,
@@ -55,7 +53,7 @@ const tokenChangedHandler = async (authUser) => {
         }
     } else if (cValue !== "unauth") {
         setCookie(auxCookieName, "unauth")
-        const response = await fetch(logoutAPIEndpoint, {
+        const response = await fetch(LOGOUT_API_ENDPOINT, {
             method: 'POST',
             credentials: 'include',
         })

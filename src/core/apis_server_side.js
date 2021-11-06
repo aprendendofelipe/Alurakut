@@ -1,4 +1,5 @@
 import { verifyIdToken } from 'next-firebase-auth'
+import getIdGitHubUserAuth from '../services/Firebase/github_firebase'
 import initFirebase from '../services/Firebase/initFirebase'
 import { getGitHubUserAuth } from '../services/Github/github'
 
@@ -11,13 +12,20 @@ export async function verifyAuthorization(req) {
     if (token) {
         try {
             await verifyIdToken(token)
-            const gitHubUserAuth = await getGitHubUserAuth(token)
-            if (!githubUserAuth?.login) {
-                error.statusCode = 403
-                error.message = 'Not authorized'
+
+            if (req.method === 'POST' && req.body.itemType !== 'report') {
+                const gitHubUserAuth = await getGitHubUserAuth(token)
+                if (gitHubUserAuth.login) {
+                    return gitHubUserAuth
+                }
+
             } else {
-                return gitHubUserAuth
+                const gitHubUserId = getIdGitHubUserAuth(token)
+                return { gitHubUserId }
             }
+            error.statusCode = 403
+            error.message = 'Not authorized'
+
         } catch (err) {
             error.statusCode = 403
             error.message = err
@@ -26,5 +34,6 @@ export async function verifyAuthorization(req) {
         error.statusCode = 400
         error.message = 'Missing Authorization header value'
     }
-    throw new error
+
+    throw error
 }

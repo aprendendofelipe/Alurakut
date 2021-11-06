@@ -3,7 +3,7 @@ import { useRouter } from 'next/dist/client/router'
 import styled from 'styled-components'
 import Link from '../utils/Link'
 import Box from './Box'
-import { AddTestimonial, DelTestimonial, AddReport, CancelReport } from '../core/apis_clients'
+import { PostsApiClient } from '../core/apis_clients'
 import { useGitHubUserAPI, useLoggedUser } from '../core/hooks'
 
 const TestimonialsBoxWrapper = ({ userProfile, list }) => {
@@ -54,6 +54,7 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
     setNewTextTestimonials("")
 
     const testimonial = {
+      itemType: 'testimonial',
       text: text,
       receiver: userProfile.login,
     }
@@ -72,9 +73,8 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
 
       setTestimonials([newTestimonial, ...testimonials])
       setCountTestimonials(countTestimonials + 1)
-      const createdTestimonial = await AddTestimonial(testimonial, loggedUser)
-
-      if (createdTestimonial.error) {
+      const createdTestimonial = await PostsApiClient('POST', testimonial, loggedUser)
+      if (!createdTestimonial.id) {
         setTestimonials(testimonials.filter(item => item.key != newTestimonial.key))
         console.error(createdTestimonial)
       } else {
@@ -100,7 +100,8 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
     let toDelete = testimonials.filter(item => item.key == itemId)[0]
     setTestimonials(testimonials.filter(item => item.key != itemId))
     setCountTestimonials(countTestimonials - 1)
-    const deleted = await DelTestimonial(itemId, loggedUser)
+    const body = { id: itemId }
+    const deleted = await PostsApiClient('DELETE', body, loggedUser)
     if (deleted?.id != toDelete?.key) {
       updateTestimonials(toDelete)
       setCountTestimonials(countTestimonials + 1)
@@ -113,8 +114,8 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
     let toReport = testimonials.filter(item => item.key == itemId)[0]
     toReport.report = 'pending'
     updateTestimonials(toReport)
-    const report = { itemId: itemId, text: '' }
-    const reported = await AddReport(report, loggedUser)
+    const report = { itemType: 'report', reportedId: itemId, text: '' }
+    const reported = await PostsApiClient('POST', report, loggedUser)
     if (reported?.postid == itemId) {
       toReport.report = Number(reported.id)
     } else {
@@ -131,7 +132,8 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
     const reportId = toCancelReport.report
     toCancelReport.report = 'canceling'
     updateTestimonials(toCancelReport)
-    const reportCanceled = await CancelReport(reportId.toString(), loggedUser)
+    const body = { id: reportId.toString() }
+    const reportCanceled = await PostsApiClient('DELETE', body, loggedUser)
     if (reportCanceled?.id == reportId) {
       toCancelReport.report = 'canceled'
     } else {
