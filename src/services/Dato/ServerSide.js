@@ -151,7 +151,6 @@ async function communityCreator(user, body) {
     return {
         itemType: COMMUNITIES_ITEM_TYPE,
         creatorSlug: author,
-        creatorId: authorId,
         title: title,
         imageUrl: imageUrl,
     }

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useLoggedUser } from '../core/hooks';
 import Link from '../utils/Link';
 import Box from './Box';
-import { AddCommunity, DelCommunity, AddReport, CancelReport } from '../core/apis_clients'
+import { PostsApiClient } from '../core/apis_clients'
 
 export function AllCommunitiesBox({ title, count, list }) {
   return (
@@ -28,26 +28,24 @@ export function AllCommunitiesBox({ title, count, list }) {
 }
 
 export function NewCommunityBox() {
-  // const loggedUser = useLoggedUser()
+  const loggedUser = useLoggedUser()
 
-  // function handleAddCommunity(e) {
-  //   e.preventDefault();
-  //   const dadosDoForm = new FormData(e.target);
+  async function handleAddCommunity(e) {
+    e.preventDefault();
+    const dadosDoForm = new FormData(e.target);
 
-  //   const comunidade = {
-  //     title: dadosDoForm.get('title'),
-  //     imageUrl: dadosDoForm.get('image')
-  //   }
+    const community = {
+      itemType: 'community',
+      title: dadosDoForm.get('title'),
+      imageUrl: dadosDoForm.get('image')
+    }
 
-  //   const comunidadeCriada = dados.registroCriado;
-  //   const comunidadesAtualizadas = [...comunidades, comunidadeCriada];
-  //   setComunidades(comunidadesAtualizadas)
-
-  // }
+    const createdCommunity = await PostsApiClient('POST', community, loggedUser)
+  }
   return (
     <Box>
-      {/* <h2 className="subTitle">Crie novas comunidades.</h2>
-      <form onSubmit={(e) => handleCriaComunidade(e, comunidades, token, setComunidades)}>
+      <h2 className="subTitle">Crie novas comunidades.</h2>
+      <form onSubmit={(e) => handleAddCommunity(e)}>
         <div>
           <input
             placeholder="Qual vai ser o nome da sua comunidade?"
@@ -67,7 +65,7 @@ export function NewCommunityBox() {
         <button>
           Criar comunidade
         </button>
-      </form> */}
+      </form>
     </Box>
   )
 }
