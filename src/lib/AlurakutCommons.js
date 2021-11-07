@@ -163,39 +163,31 @@ AlurakutMenu.Wrapper = styled.header`
         padding: 10px 16px;
         position: relative;
         text-decoration: none;
-        &:after {
-          content: " ";
-          background-color: #5292C1;
-          display: block;
-          position: absolute;
-          width: 1px;
-          height: 12px;
-          margin: auto;
-          left: 0;
-          top: 0;
-          bottom: 0;
-        }
+      }
+      img {
+        padding: auto;
+        position: relative;
       }
     }
     input {
-      color: #ffffff;
-      background: #5579A1;
+      color: #2E7BB4;
+      background: #fcfdff;
       padding: 10px 42px;
       border: 0;
       background-image: url(${`${BASE_URL}/icons/search.svg`});
-      background-position: 15px center;
+      background-position: right 15px center;
       background-repeat: no-repeat;
       border-radius: 1000px;
       font-size: 12px;
       ::placeholder {
-        color: #ffffff;
+        color: #9ec7e5;
         opacity: 1;
       }
     } 
   }
 `;
 AlurakutMenu.Logo = styled.img`
-  background-color: #ffffff;
+  background-color: #fcfdff;
   padding: 9px 14px;
   border-radius: 1000px;
   height: 34px;
@@ -369,7 +361,7 @@ OrkutNostalgicIconSet.List = styled.ul`
 const AlurakutLoginScreen = css`
   :root {
     --backgroundPrimary: #D9E6F6;
-    --backgroundSecondary: #F1F9FE;
+    --backgroundSecondary: #fcfdff;
     --backgroundTertiary: #FFFFFF;
     --backgroundQuarternary: #BBCDE8;
     --colorPrimary: #2E7BB4;

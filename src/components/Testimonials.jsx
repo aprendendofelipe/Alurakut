@@ -293,6 +293,7 @@ const BoxWrapper = styled(Box)`
       z-indeX: 1;
       background-image: linear-gradient(0deg,#BBCDE873,transparent);
       p {
+        color: #020068;
         font: 400 14px Arial;
         height: 100%;
         padding: 8px;

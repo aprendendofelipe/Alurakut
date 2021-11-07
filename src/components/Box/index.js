@@ -35,13 +35,17 @@ const Box = styled.div`
     border-radius: 8px;
     height: 80px;
     width: 100%;
-    background-color: #F4F4F4;
-    color: #333333;
+    background-color: #F1F6FC;
+    color: #2E7BB4;
     border: 0;
     padding: 8px;
     margin-bottom: 14px;
     resize: none;
     outline: none;
+    ::placeholder {
+      color: #9ec7e5;
+      opacity: 1;
+    }
   }
   hr {
     margin-top: 12px;
@@ -51,14 +55,14 @@ const Box = styled.div`
   }
   input {
     width: 100%;
-    background-color: #F4F4F4;
-    color: #333333;
+    background-color: #F1F6FC;
+    color: #2E7BB4;
     border: 0;
     padding: 14px 16px;
     margin-bottom: 14px;
     border-radius: 10000px;
     ::placeholder {
-      color: #333333;
+      color: #9ec7e5;
       opacity: 1;
     }
   }
