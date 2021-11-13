@@ -209,7 +209,9 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
         </p>
         <hr />
 
-        <AlurakutProfileSidebarMenuDefault />
+        <AlurakutProfileSidebarMenuDefault
+          loginGithub={githubUser}
+        />
       </div>
     </div>
   )
