@@ -1,5 +1,3 @@
-const TWELVE_DAYS_IN_MS = 1036800000;
-
 const APIconfig = {
     name: process.env.NEXT_PUBLIC_APP_NAME,
     keys: [
@@ -7,7 +5,7 @@ const APIconfig = {
         process.env.COOKIE_SECRET_PREVIOUS,
     ],
     httpOnly: true,
-    maxAge: TWELVE_DAYS_IN_MS,
+    maxAge: parseInt(process.env.NEXT_PUBLIC_COOKIE_MAX_AGE, 10),
     overwrite: true,
     path: '/',
     sameSite: 'strict',

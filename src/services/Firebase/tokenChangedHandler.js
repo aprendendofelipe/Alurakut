@@ -30,11 +30,8 @@ const tokenChangedHandler = async (authUser) => {
     const cValue = getCookie(auxCookieName)
 
     if (authUser.email) {
-        const idToken = await authUser.firebaseUser.getIdTokenResult()
-        const expTime = idToken.expirationTime
-        setCookie(auxCookieName, expTime, expTime)
-
-        if (cValue !== expTime) {
+        if (!(cValue > Date.now())) {
+            const idToken = await authUser.firebaseUser.getIdTokenResult()
             const response = await fetch(LOGIN_API_ENDPOINT, {
                 method: 'POST',
                 headers: {
@@ -49,6 +46,9 @@ const tokenChangedHandler = async (authUser) => {
                     `Received ${response.status
                     } response from login API endpoint: ${JSON.stringify(responseJSON)}`
                 )
+            } else {
+                const expTime = Date.now() + parseInt(process.env.NEXT_PUBLIC_COOKIE_MAX_AGE, 10)
+                setCookie(auxCookieName, expTime, expTime)
             }
         }
     } else if (cValue !== "unauth") {
