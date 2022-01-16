@@ -4,16 +4,35 @@ import { AlurakutStyles } from '../lib/AlurakutCommons'
 import { Head_app } from '../components/Head'
 
 const GlobalStyle = createGlobalStyle`
-  /* Reset CSS (Necolas Reset CSS <3) */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+    --backgroundPrimary: #D9E6F6;
+    --colorPrimary: #2E7BB4;
+    --textPrimaryColor: #333333;
+
+    --backgroundSecondary: #fcfdff;
+    --colorSecondary: #388BB0;
+    --textSecondaryColor: #D81D99;
+
+    --backgroundTertiary: #FFFFFF;
+    --colorTertiary: #2F4A71;
+    --textTertiaryColor: #5A5A5A;
+
+    --backgroundQuarternary: #BBCDE8;
+    --colorQuarternary: #D81D99;
+    --textQuarternaryColor: #FFFFFF;
+
+    --commonRadius: 8px;
   }
 
   body {
     font-family: sans-serif;
-    background-color: #D9E6F6;
+    background-color: var(--backgroundPrimary);
   }
 
   #__next {

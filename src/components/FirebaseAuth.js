@@ -18,7 +18,7 @@ const firebaseAuthConfig = {
   },
 }
 
-const FirebaseAuth = () => {
+const Firebaseui = () => {
   const [renderAuth, setRenderAuth] = useState(false);
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -38,4 +38,4 @@ const FirebaseAuth = () => {
   )
 }
 
-export default FirebaseAuth
+export default Firebaseui

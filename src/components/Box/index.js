@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Box = styled.div`
-  background: #FFFFFF;
+  background: var(--backgroundTertiary);
   border-radius: 8px;
 
   padding: 16px;
@@ -9,7 +9,7 @@ const Box = styled.div`
   margin-bottom: 10px;
   .boxLink {
     font-size: 14px;
-    color: #2E7BB4;
+    color: var(--colorPrimary);
     text-decoration: none;
     font-weight: 800;
     word-break: break-word;
@@ -28,7 +28,7 @@ const Box = styled.div`
     margin-bottom: 20px;
     font-size: 16px;
     font-weight: 700;
-    color: #333333;
+    color: var(--textPrimaryColor);
     margin-bottom: 20px;
   }
   .inputTestimonialArea {
@@ -36,7 +36,7 @@ const Box = styled.div`
     height: 80px;
     width: 100%;
     background-color: #F1F6FC;
-    color: #2E7BB4;
+    color: var(--colorPrimary);
     border: 0;
     padding: 8px;
     margin-bottom: 14px;
@@ -56,7 +56,7 @@ const Box = styled.div`
   input {
     width: 100%;
     background-color: #F1F6FC;
-    color: #2E7BB4;
+    color: var(--colorPrimary);
     border: 0;
     padding: 14px 16px;
     margin-bottom: 14px;

@@ -32,17 +32,19 @@ const LoginPage = () => {
               <FirebaseAuth />
             </div>
 
-            <footer className="box">
+            <div className="box">
               <p>
                 Ainda não é membro? <br />
                 <Link href="/users/aprendendofelipe">
                   <br />
-                  <strong>
-                    ENTRAR JÁ
-                  </strong>
+                  <button>
+                    <strong>
+                      Entrar como Visitante
+                    </strong>
+                  </button>
                 </Link>
               </p>
-            </footer>
+            </div>
           </section>
 
           <footer className="footerArea">

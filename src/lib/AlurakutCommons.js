@@ -70,6 +70,7 @@ export function AlurakutMenu({ loginGithub }) {
               name="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              autoComplete='off'
             />
           </form>
         </div>
@@ -84,8 +85,8 @@ export function AlurakutMenu({ loginGithub }) {
   )
 }
 AlurakutMenu.Wrapper = styled.header`
-  width: 100%;
-  background-color: #308BC5;
+  /* width: 100%; */
+  /* background-color: #308BC5; */
 
   .alurakutMenuProfileSidebar {
     background: white;
@@ -113,7 +114,7 @@ AlurakutMenu.Wrapper = styled.header`
 
     .boxLink {
       font-size: 18px;
-      color: #2E7BB4;
+      color: var(--colorPrimary);
       -webkit-text-decoration: none;
       text-decoration: none;
       font-weight: 800;
@@ -128,8 +129,9 @@ AlurakutMenu.Wrapper = styled.header`
   }
 
   .container {
-    background-color: #308BC5;
+    background-color: var(--colorSecondary);
     padding: 7px 16px;
+    gap: 5px;
     width: 100vw;
     max-width: 1078px;
     margin: auto;
@@ -171,24 +173,28 @@ AlurakutMenu.Wrapper = styled.header`
       }
     }
     input {
-      color: #2E7BB4;
-      background: #fcfdff;
-      padding: 10px 42px;
+      width: 100%;
+      color: var(--colorPrimary);
+      background: var(--backgroundTertiary);
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 10px;
+      padding-right: 5px;
       border: 0;
       background-image: url(${`${BASE_URL}/icons/search.svg`});
-      background-position: right 15px center;
+      background-position: right 10px center;
       background-repeat: no-repeat;
       border-radius: 1000px;
       font-size: 12px;
       ::placeholder {
-        color: #9ec7e5;
-        opacity: 1;
+        color: var(--colorPrimary);
+        opacity: 0.6;
       }
     } 
   }
 `;
 AlurakutMenu.Logo = styled.img`
-  background-color: #fcfdff;
+  background-color: var(--backgroundTertiary);
   padding: 9px 14px;
   border-radius: 1000px;
   height: 34px;
@@ -265,7 +271,7 @@ export function AlurakutProfileSidebarMenuDefault({ loginGithub }) {
 AlurakutProfileSidebarMenuDefault.Wrapper = styled.div`
   a {
     font-size: 12px;
-    color: #2E7BB4;
+    color: var(--colorPrimary);
     margin-bottom: 16px;
     display: flex;
     align-items: center;
@@ -333,7 +339,7 @@ OrkutNostalgicIconSet.List = styled.ul`
   flex-wrap: wrap;
   li {
     font-size: 12px;
-    color: #5A5A5A;
+    color: var(--textTertiaryColor);
     display: grid;
     grid-template-areas:
       "title title"
@@ -362,22 +368,6 @@ OrkutNostalgicIconSet.List = styled.ul`
 // Login Page
 // ================================================================================================================
 const AlurakutLoginScreen = css`
-  :root {
-    --backgroundPrimary: #D9E6F6;
-    --backgroundSecondary: #fcfdff;
-    --backgroundTertiary: #FFFFFF;
-    --backgroundQuarternary: #BBCDE8;
-    --colorPrimary: #2E7BB4;
-    --colorSecondary: #388BB0;
-    --colorTertiary: #2F4A71;
-    --colorQuarternary: #D81D99;
-    --textPrimaryColor: #333333;
-    --textSecondaryColor: #FFFFFF;
-    --textTertiaryColor: #5A5A5A;
-    --textQuarternaryColor: #C5C6CA;
-    --commonRadius: 8px;
-  }
-
 
   .loginScreen {
     padding: 16px;
@@ -399,7 +389,7 @@ const AlurakutLoginScreen = css`
     }
     .logoArea {
       grid-area: logoArea;
-      background-color: var(--backgroundTertiary);
+      background-color: var(--backgroundSecondary);
       border-radius: var(--commonRadius);
       padding: var(--gutter);
       text-align: center;
@@ -463,7 +453,7 @@ const AlurakutLoginScreen = css`
         input {
           width: 100%;
           display: block;
-          border: 1px solid var(--textQuarternaryColor);
+          border: 1px solid var(--textTertiaryColor);
           padding: 12px;
           background-color: var(--backgroundTertiary);
           border-radius: var(--commonRadius);
@@ -477,7 +467,7 @@ const AlurakutLoginScreen = css`
           padding: 12px;
           border-radius: var(--commonRadius);
           background-color: var(--colorPrimary);
-          color: var(--textSecondaryColor);
+          color: var(--textQuarternaryColor);
         }
       }
     }
