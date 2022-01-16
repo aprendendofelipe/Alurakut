@@ -6,6 +6,7 @@ import { useLoggedUser } from '../core/hooks'
 
 const BASE_URL = ''
 const v = 1
+const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME
 
 // ================================================================================================================
 // Menu
