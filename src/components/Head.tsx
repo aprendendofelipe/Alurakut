@@ -1,5 +1,7 @@
 import NextHead from 'next/head';
 
+const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME
+
 export function Head_app() {
     return (
         <NextHead>
@@ -11,11 +13,11 @@ export function Head_app() {
     )
 }
 
-export function HeadTitle({ children }) {
+export function PageSubtitle({ children = undefined }) {
     return (
         <NextHead>
             <title>
-                {children}
+                {children ? APP_NAME + " | " + children : APP_NAME}
             </title>
         </NextHead>
     )

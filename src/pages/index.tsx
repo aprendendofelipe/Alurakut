@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Head from 'next/head'
+import { PageSubtitle } from '../components/Head'
 import {
   withAuthUser,
   withAuthUserTokenSSR,
@@ -48,9 +48,9 @@ const Home = (props) => {
 
   return (
     <>
-      <Head>
-        <title>{`Alurakut | ${gitHubUser.login}`}</title>
-      </Head>
+      <PageSubtitle>
+        {gitHubUser.login}
+      </PageSubtitle>
       <AlurakutMenu
         loginGithub={gitHubUser}
       />

@@ -1,14 +1,14 @@
 import { withAuthUser, AuthAction } from 'next-firebase-auth'
 import FirebaseAuth from '../components/FirebaseAuth'
-import Head from 'next/head'
+import { PageSubtitle } from '../components/Head'
 import Link from '../utils/Link'
 
 const LoginPage = () => {
   return (
     <>
-      <Head>
-        <title>Alurakut | Login</title>
-      </Head>
+      <PageSubtitle>
+        Login
+      </PageSubtitle>
       <main style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <div className="loginScreen">
           <section className="logoArea">

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react'
 import Link from '../utils/Link'
 import styled, { css } from 'styled-components'
-import { useRouter } from 'next/dist/client/router';
-import { useLoggedUser } from '../core/hooks';
+import { useRouter } from 'next/dist/client/router'
+import { useLoggedUser } from '../core/hooks'
 
-const BASE_URL = '';
-const v = 1;
+const BASE_URL = ''
+const v = 1
 
 // ================================================================================================================
 // Menu
@@ -65,7 +65,7 @@ export function AlurakutMenu({ loginGithub }) {
           <form onSubmit={(e) => handleSearch(e)} >
             <input
               type="text"
-              placeholder="Pesquisar no Alurakut"
+              placeholder={"Pesquisar em " + APP_NAME}
               name="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}

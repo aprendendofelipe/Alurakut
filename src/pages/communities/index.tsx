@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Head from 'next/head'
+import { PageSubtitle } from '../../components/Head'
 import { useRouter } from 'next/dist/client/router';
 import MainGrid from '../../components/MainGrid'
 import Box from '../../components/Box'
@@ -48,9 +48,9 @@ const Communities = (props) => {
 
     return (
         <>
-            <Head>
-                <title>Alurakut | Comunidades</title>
-            </Head>
+            <PageSubtitle>
+                Comunidades
+            </PageSubtitle>
             <AlurakutMenu
                 loginGithub={gitHubUser}
             />
