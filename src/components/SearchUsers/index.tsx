@@ -20,15 +20,12 @@ export default function UsersListWrapper({ usersFound, search }) {
                 }
             })
         )
-
-        console.log('debug - usersList: ', usersList)
-        console.log('debug - usersFound: ', usersFound)
-
     }, [usersFound])
+
 
     return (<>
         {usersList == [] ? null :
-            < UserListBox search={search} >
+            < UserListBox search={search && usersList.length} >
                 <ul>
                     {usersList.map((item) => {
                         return (<li key={item.id}>
