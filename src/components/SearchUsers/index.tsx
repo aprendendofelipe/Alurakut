@@ -25,17 +25,19 @@ export default function UsersListWrapper({ usersFound, search }) {
 
     return (<>
         {usersList == [] ? null :
-            < UserListBox search={search && usersList.length} >
-                <ul>
-                    {usersList.map((item) => {
-                        return (<li key={item.id}>
-                            <Link href={item.href}>
-                                <img src={item.imgSRC} />
-                                <span>{item.name}</span>
-                            </Link>
-                        </li>)
-                    })}
-                </ul>
+            < UserListBox show={search && usersList.length} >
+                <div>
+                    <ul>
+                        {usersList.map((item) => {
+                            return (<li key={item.id}>
+                                <Link href={item.href}>
+                                    <img src={item.imgSRC} />
+                                    <span>{item.name}</span>
+                                </Link>
+                            </li>)
+                        })}
+                    </ul>
+                </div>
             </UserListBox>
         }
     </>)
@@ -43,53 +45,69 @@ export default function UsersListWrapper({ usersFound, search }) {
 
 
 const UserListBox = styled.div`
-    background: var(--colorSecondary);
-    border-radius: 12px;
-    margin: -10px;
-    top: -40px;
-    position: relative;
-    padding: 6px;
-    padding-top: 54px;
-    z-indeX: 1;
-    transition: .2s;
-    pointer-events: ${({ search }) => search ? 'all' : 'none'};
-    opacity: ${({ search }) => search ? '1' : '0'};
-    transform: ${({ search }) => search ? 'translateY(0)' : 'translateY(calc(-100% - 48px))'};
-    @media(max-width: 360px) {
-        width: 70vw;
+
+    overflow: hidden;
+    margin-top: -19px;
+    margin-left: -5px;
+    margin-right: -5px;
+
+    div {
+        background: var(--colorSecondary);
+        border-bottom-left-radius: 17px;
+        border-bottom-right-radius: 17px;
+        position: relative;
+        padding: 5px;
+        padding-top: 0px;
+        transition: .3s;
+        pointer-events: ${({ show }) => show ? 'all' : 'none'};
+        opacity: ${({ show }) => show ? '1' : '0'};
+        transform: ${({ show }) => show ? 'translateY(0)' : 'translateY(calc(-100% - 48px))'};
+        @media(max-width: 359px) {
+            width: 65vw;
+        }
     }
     
     ul {
         background: var(--textQuarternaryColor);
-        border-radius: var(--commonRadius);
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        padding-top: 20px;
         list-style: none;
     }
     ul li {
         padding: 4px;
         overflow: hidden;
     }
-    ul li a {
-      display: inline-block;
+    ul li a {        
+        display: inline-block;
+        width: 100%;
+        /* height: 48px; */
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--commonRadius); 
+        &:after {
+            content: "";
+            position: absolute;
+            /* border-radius: 100px; */
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            z-indeX: 1;
+            background-image: linear-gradient(0deg,#D9E6F673,transparent);
+        }
+        :focus {
+            background: var(--backgroundPrimary);
+        }
+        :hover {
+            background: var(--backgroundQuarternary);
+        }
+    }
+    ul li a img {
+      width: 48px;
       height: 48px;
       position: relative;
-      border-radius: 8px;
-      &:after {
-        content: "";
-        position: absolute;
-        border-radius: 100px;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        z-indeX: 1;
-        background-image: linear-gradient(0deg,#00000050,transparent);
-        }
-      }
-    ul li a img {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      border-radius: 100px;
+      border-radius: var(--commonRadius);
     }
     ul li a span {
         color: var(--textPrimaryColor);

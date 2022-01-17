@@ -19,6 +19,7 @@ export function AlurakutMenu({ loginGithub }) {
   const [isMenuOpen, setMenuState] = useState(false)
   const [search, setSearch] = useState("")
   const [queryhLazy, setQueryLazy] = useState("")
+  const [keyTime, setKeyTime] = useState(0)
   const router = useRouter()
   const [SearchUsers, { loading, error, data: usersFound }] = useLazyQuery(
     SEARCH_USERS_QUERY,
@@ -27,19 +28,26 @@ export function AlurakutMenu({ loginGithub }) {
     },
   )
 
+
+
   useEffect(() => {
-    if (search.length > 1 | queryhLazy.length > 1) {
+    const now = Date.now()
+    const keyDelay = (now - keyTime)
+    const delay = keyDelay > 600 ? 800 : keyDelay + 200
+    setKeyTime(now)
+
+    if (search.length > 0) {
       const timeoutId = setTimeout(() => {
         setQueryLazy(search.slice(0))
         SearchUsers()
-      }, 300);
+      }, delay);
       return () => clearTimeout(timeoutId);
     }
   }, [search]);
 
+
   useEffect(() => {
     const handleRouteChange = () => setSearch("")
-
     router.events.on('routeChangeStart', handleRouteChange)
     return () => {
       router.events.off('routeChangeStart', handleRouteChange)
@@ -52,8 +60,6 @@ export function AlurakutMenu({ loginGithub }) {
     setSearch(dadosDoForm.get('search'))
     if (search) {
       router.push(`/users/${search}`)
-    } else {
-      setQueryLazy("")
     }
     setSearch("")
   }
@@ -99,6 +105,7 @@ export function AlurakutMenu({ loginGithub }) {
           <form onSubmit={(e) => handleSearch(e)} >
             <input
               type="text"
+              autoFocus={true}
               placeholder={"Pesquisar em " + APP_NAME}
               name="search"
               value={search}
@@ -231,6 +238,12 @@ AlurakutMenu.Wrapper = styled.header`
         color: var(--colorPrimary);
         opacity: 0.6;
       }
+      :focus {
+        ::placeholder {
+        color: var(--colorPrimary);
+        opacity: 0.2;
+      }
+      }
     } 
   }
 `;
@@ -239,6 +252,9 @@ AlurakutMenu.Logo = styled.img`
   padding: 9px 14px;
   border-radius: 1000px;
   height: 34px;
+  @media(max-width: 359px) {
+      padding: 1px;
+  }
 `;
 
 function AlurakutMenuProfileSidebar({ githubUser }) {
