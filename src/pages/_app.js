@@ -1,7 +1,9 @@
-import initFirebase from '../services/Firebase/initFirebase';
+import initFirebase from '../services/Firebase/initFirebase'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { AlurakutStyles } from '../lib/AlurakutCommons'
 import { Head_app } from '../components/Head'
+import { ApolloProvider } from '@apollo/client'
+import { useApollo } from '../services/Github/apolloClient'
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -59,13 +61,15 @@ const theme = {
 initFirebase();
 
 export default function App({ Component, pageProps }) {
+  const apolloClient = useApollo(pageProps)
+
   return (
-    <>
+    <ApolloProvider client={apolloClient}>
       <Head_app />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Component {...pageProps} />
       </ThemeProvider>
-    </>
+    </ApolloProvider>
   )
 }

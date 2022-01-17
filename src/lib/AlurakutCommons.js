@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from '../utils/Link'
 import styled, { css } from 'styled-components'
 import { useRouter } from 'next/dist/client/router'
 import { useLoggedUser } from '../core/hooks'
+import { SEARCH_USERS_QUERY } from '../services/Github/gitHubGraphQL'
+import { useLazyQuery } from '@apollo/client'
+import UsersListWrapper from '../components/SearchUsers'
 
 const BASE_URL = ''
 const v = 1
@@ -13,15 +16,45 @@ const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME
 // ================================================================================================================
 export function AlurakutMenu({ loginGithub }) {
   const loggedUser = useLoggedUser()
-  const [isMenuOpen, setMenuState] = useState(false);
-  const [search, setSearch] = useState("");
+  const [isMenuOpen, setMenuState] = useState(false)
+  const [search, setSearch] = useState("")
+  const [queryhLazy, setQueryLazy] = useState("")
   const router = useRouter()
+  const [SearchUsers, { loading, error, data: usersFound }] = useLazyQuery(
+    SEARCH_USERS_QUERY,
+    {
+      variables: { userQuery: queryhLazy }
+    },
+  )
+
+  useEffect(() => {
+    if (search.length > 1 | queryhLazy.length > 1) {
+      const timeoutId = setTimeout(() => {
+        setQueryLazy(search.slice(0))
+        SearchUsers()
+      }, 300);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [search]);
+
+  useEffect(() => {
+    const handleRouteChange = () => setSearch("")
+
+    router.events.on('routeChangeStart', handleRouteChange)
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange)
+    }
+  }, []);
 
   function handleSearch(e) {
     e.preventDefault()
     const dadosDoForm = new FormData(e.target)
     setSearch(dadosDoForm.get('search'))
-    router.push(`/users/${search}`)
+    if (search) {
+      router.push(`/users/${search}`)
+    } else {
+      setQueryLazy("")
+    }
     setSearch("")
   }
 
@@ -72,6 +105,10 @@ export function AlurakutMenu({ loginGithub }) {
               onChange={(e) => setSearch(e.target.value)}
               autoComplete='off'
             />
+            < UsersListWrapper
+              usersFound={usersFound}
+              search={search}
+            />
           </form>
         </div>
 
@@ -84,6 +121,7 @@ export function AlurakutMenu({ loginGithub }) {
     </AlurakutMenu.Wrapper>
   )
 }
+
 AlurakutMenu.Wrapper = styled.header`
   /* width: 100%; */
   /* background-color: #308BC5; */
@@ -133,6 +171,7 @@ AlurakutMenu.Wrapper = styled.header`
     padding: 7px 16px;
     gap: 5px;
     width: 100vw;
+    height: 48px;
     max-width: 1078px;
     margin: auto;
     display: flex;
@@ -173,6 +212,8 @@ AlurakutMenu.Wrapper = styled.header`
       }
     }
     input {
+      position: relative;
+      z-indeX: 2;
       width: 100%;
       color: var(--colorPrimary);
       background: var(--backgroundTertiary);
