@@ -183,6 +183,7 @@ AlurakutMenu.Wrapper = styled.header`
     left: 50%;
     transform: translate(-50%, 0);
     z-index: 101;
+    box-shadow: 0px 1px 5px #33333388;
     @media(min-width: 860px) {
       justify-content: flex-start;
     }
@@ -230,16 +231,7 @@ AlurakutMenu.Wrapper = styled.header`
       background-repeat: no-repeat;
       border-radius: 1000px;
       font-size: 12px;
-      ::placeholder {
-        color: var(--colorPrimary);
-        opacity: 0.6;
-      }
-      :focus {
-        ::placeholder {
-        color: var(--colorPrimary);
-        opacity: 0.2;
-      }
-      }
+      
     } 
   }
 `;
@@ -458,7 +450,17 @@ export const AlurakutStyles = css`
     }
     &:hover,
     &:focus {
-      box-shadow: 0px 0px 5px #33333357;
+      box-shadow: inset 0px 0px 5px #33333357;
     }
+    ::placeholder {
+        color: var(--colorPrimary);
+        opacity: 0.6;
+      }
+      :focus {
+        ::placeholder {
+        color: var(--colorPrimary);
+        opacity: 0.2;
+        }
+      }
   }
 `;

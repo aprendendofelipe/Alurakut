@@ -25,7 +25,7 @@ export default function UsersListWrapper({ usersFound, search }) {
 
     return (<>
         {usersList == [] ? null :
-            < UserListBox show={search && usersList.length} >
+            <UserListBox show={search && usersList.length} >
                 <div>
                     <ul>
                         {usersList.map((item) => {
@@ -45,23 +45,20 @@ export default function UsersListWrapper({ usersFound, search }) {
 
 
 const UserListBox = styled.div`
-
-    overflow: hidden;
-    margin-top: -19px;
+    margin-top: -39px;
     margin-left: -5px;
     margin-right: -5px;
 
     div {
         background: var(--colorSecondary);
-        border-bottom-left-radius: 17px;
-        border-bottom-right-radius: 17px;
+        border-radius: 22px;
         position: relative;
         padding: 5px;
-        padding-top: 0px;
         transition: .3s;
+        box-shadow: 0px 2px 8px #333333AA;
         pointer-events: ${({ show }) => show ? 'all' : 'none'};
         opacity: ${({ show }) => show ? '1' : '0'};
-        transform: ${({ show }) => show ? 'translateY(0)' : 'translateY(calc(-100% - 48px))'};
+        transform: ${({ show }) => show ? 'translateY(0) scaleY(1)' : 'translateY(calc(-50% + 17px)) scaleY(0)'};
         @media(max-width: 359px) {
             width: 65vw;
         }
@@ -69,9 +66,8 @@ const UserListBox = styled.div`
     
     ul {
         background: var(--textQuarternaryColor);
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
-        padding-top: 20px;
+        border-radius: 18px;
+        padding-top: 39px;
         list-style: none;
     }
     ul li {

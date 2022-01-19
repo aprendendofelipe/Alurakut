@@ -74,8 +74,8 @@ const Home = (props) => {
           </Box>
 
           <Box>
-            <h2 className="subTitle">Pesquise outros usuários pela barra de pesquisa.</h2>
-            <h2 className="subTitle">Escreva seu depoimento no perfil que quiser.</h2>
+            <h2 className="subTitle">Encontre usuários pela barra de pesquisa.</h2>
+            <h2 className="subTitle">Escreva seu depoimento nas páginas dos amigos.</h2>
             <h2 className="subTitle">Convide seus amigos para ver seu depoimento no perfil deles.</h2>
           </Box>
 

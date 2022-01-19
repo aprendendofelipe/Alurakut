@@ -48,17 +48,17 @@ export function NewCommunityBox() {
       <form onSubmit={(e) => handleAddCommunity(e)}>
         <div>
           <input
-            placeholder="Qual vai ser o nome da sua comunidade?"
+            placeholder="Defina o nome da sua comunidade!"
             name="title"
-            aria-label="Qual vai ser o nome da sua comunidade?"
+            aria-label="Defina o nome da sua comunidade!"
             type="text"
           />
         </div>
         <div>
           <input
-            placeholder="Coloque uma URL para usarmos de capa"
+            placeholder="Informe a URL da imagem que usaremos de capa"
             name="image"
-            aria-label="Coloque uma URL para usarmos de capa"
+            aria-label="Informe a URL da imagem que usaremos de capa"
           />
         </div>
 
