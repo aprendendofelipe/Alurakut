@@ -146,11 +146,18 @@ AlurakutMenu.Wrapper = styled.header`
       display: none;
     }
     > div {
+      display: flex;
+      flex-direction: column;
       max-width: 400px;
       margin: auto;
+      }
     }
     a {
       font-size: 18px;
+      align-self: center;
+      @media (min-width: 860px) {
+        align-self: flex-start;
+      }
     }
 
     .boxLink {
@@ -218,20 +225,14 @@ AlurakutMenu.Wrapper = styled.header`
     input {
       position: relative;
       z-indeX: 2;
-      width: 100%;
-      color: var(--colorPrimary);
-      background: var(--backgroundTertiary);
       padding-top: 10px;
       padding-bottom: 10px;
       padding-left: 10px;
       padding-right: 5px;
-      border: 0;
       background-image: url(${`${BASE_URL}/icons/search.svg`});
       background-position: right 10px center;
       background-repeat: no-repeat;
-      border-radius: 1000px;
       font-size: 12px;
-      
     } 
   }
 `;
@@ -254,11 +255,9 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
           margin: 'auto'
         }} />
         <hr />
-        <p>
-          <a className="boxLink" href={`https://github.com/${githubUser?.login}`} target="_blank" >
-            {githubUser?.login}
-          </a>
-        </p>
+        <a className="boxLink" href={`https://github.com/${githubUser?.login}`} target="_blank" >
+          {githubUser?.login}
+        </a>
         <hr />
 
         <AlurakutProfileSidebarMenuDefault
@@ -320,8 +319,11 @@ AlurakutProfileSidebarMenuDefault.Wrapper = styled.div`
     margin-bottom: 16px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     text-decoration: none;
+    @media(min-width: 860px) {
+      justify-content: flex-start;
+    }
     img {
       width: 16px;
       height: 16px;
@@ -442,25 +444,28 @@ export const AlurakutStyles = css`
     }
   }
   input {
+    color: var(--colorPrimary);
+    width: 100%;
+    border: 0;
+    border-radius: 1000px;
     transition: .3s;
     outline: 0;
     &:disabled {
       cursor: not-allowed;
       opacity: .5;
     }
-    &:hover,
-    &:focus {
+    :hover, &:focus {
       box-shadow: inset 0px 0px 5px #33333357;
     }
     ::placeholder {
         color: var(--colorPrimary);
-        opacity: 0.6;
+        opacity: 0.7;
       }
-      :focus {
-        ::placeholder {
-        color: var(--colorPrimary);
-        opacity: 0.2;
-        }
+    :focus {
+      ::placeholder {
+      color: var(--colorPrimary);
+      opacity: 0.2;
       }
+    }
   }
 `;

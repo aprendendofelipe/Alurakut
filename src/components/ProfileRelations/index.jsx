@@ -55,7 +55,7 @@ const BoxWrapper = styled(Box)`
 export default function ProfileRelationsBoxWrapper({ title, count, list }) {
   return (
     <BoxWrapper>
-      <h2 className="smallTitle">
+      <h2 className="subTitle">
         {`${title} (${count})`}
       </h2>
 

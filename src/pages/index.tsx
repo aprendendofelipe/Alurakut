@@ -74,9 +74,19 @@ const Home = (props) => {
           </Box>
 
           <Box>
-            <h2 className="subTitle">Encontre usuários pela barra de pesquisa.</h2>
-            <h2 className="subTitle">Escreva seu depoimento nas páginas dos amigos.</h2>
-            <h2 className="subTitle">Convide seus amigos para ver seu depoimento no perfil deles.</h2>
+            <h2 className='subTitle'>Sugestões de {process.env.NEXT_PUBLIC_APP_NAME}:</h2>
+            <span className="suggestions">
+              <img src="/icons/search.svg" />
+              Encontre usuários pela barra de pesquisa.
+            </span>
+            <span className="suggestions">
+              <img src="/icons/sun.svg" />
+              Escreva seu depoimento nas páginas dos amigos.
+            </span>
+            <span className="suggestions">
+              <img src="/icons/user.svg" />
+              Convide seus amigos para ver seu depoimento no perfil deles.
+            </span>
           </Box>
 
           <NewCommunityBox />

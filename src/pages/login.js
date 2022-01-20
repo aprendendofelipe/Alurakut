@@ -100,6 +100,10 @@ const LoginScreen = styled.div`
     color: var(--textQuarternaryColor);
     font-size: 14px;
     font-family: Roboto,Helvetica,Arial,sans-serif;
+    box-shadow: 
+      0 2px 2px 0 rgb(0 0 0 / 14%),
+      0 3px 1px -2px rgb(0 0 0 / 20%),
+      0 1px 5px 0 rgb(0 0 0 / 12%);
     transition: .2s;
     @media(min-width: 268px) {
       min-width: 200px;
@@ -143,6 +147,7 @@ const LoginScreen = styled.div`
         background-color: var(--backgroundSecondary);
         border-radius: var(--commonRadius);
         flex: 1;
+        box-shadow: 0px 0px 2px #33333357;
         p {
           font-size: 14px;
         }
@@ -160,6 +165,7 @@ const LoginScreen = styled.div`
       justify-content: center;
       align-items: center;
       min-height: 263px;
+      box-shadow: 0px 0px 2px #33333357;
       @media(min-height: 390px) and (min-width: 780px) {
         min-height: 320px;
       }
@@ -218,6 +224,7 @@ const LoginScreen = styled.div`
       background-color: var(--backgroundQuarternary);
       border-radius: var(--commonRadius);
       padding: 8px;
+      box-shadow: 0px 0px 2px #33333357;
       p {
         font-size: 12px;
         text-align: center;

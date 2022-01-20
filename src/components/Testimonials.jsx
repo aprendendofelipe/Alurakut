@@ -211,7 +211,7 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
       </Box>}
     {countTestimonials > 0 &&
       <BoxWrapper>
-        <h2 className="smallTitle">
+        <h2 className="subTitle">
           {`Depoimento(s) de ${userProfile.login} (${countTestimonials}):`}
         </h2>
 

@@ -1,13 +1,14 @@
-import styled from 'styled-components';
-import { useLoggedUser } from '../core/hooks';
-import Link from '../utils/Link';
-import Box from './Box';
+import styled from 'styled-components'
+import { useLoggedUser } from '../core/hooks'
+import Link from '../utils/Link'
+import InputBox from './InputBox'
+import Box from './Box'
 import { PostsApiClient } from '../core/apis_clients'
 
 export function AllCommunitiesBox({ title, count, list }) {
   return (
     <AllCommunitiesBoxWrapper>
-      <h2 className="smallTitle">
+      <h2 className="subTitle">
         {`${title} (${count})`}
       </h2>
 
@@ -43,7 +44,7 @@ export function NewCommunityBox() {
     const createdCommunity = await PostsApiClient('POST', community, loggedUser)
   }
   return (
-    <Box>
+    <InputBox>
       <h2 className="subTitle">Crie novas comunidades.</h2>
       <form onSubmit={(e) => handleAddCommunity(e)}>
         <div>
@@ -66,7 +67,7 @@ export function NewCommunityBox() {
           Criar comunidade
         </button>
       </form>
-    </Box>
+    </InputBox>
   )
 }
 
