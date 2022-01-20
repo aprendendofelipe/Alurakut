@@ -5,14 +5,18 @@ import Link from '../utils/Link'
 import Box from './Box'
 import { PostsApiClient } from '../core/apis_clients'
 import { useGitHubUserAPI, useLoggedUser } from '../core/hooks'
+import { useWarnIfUnsavedChanges } from '../utils/UnsavedChanges';
 
 const TestimonialsBoxWrapper = ({ userProfile, list }) => {
   const [testimonials, setTestimonials] = useState([])
   const [countTestimonials, setCountTestimonials] = useState(list.countTestimonials)
   const [newTextTestimonials, setNewTextTestimonials] = useState('')
+  const [unsavedChanges, setUnsavedChanges] = useState([])
   const loggedUser = useLoggedUser()
   const loggedGitHubUser = useGitHubUserAPI(loggedUser?.gitHubUserId)
   const router = useRouter()
+
+  useWarnIfUnsavedChanges(unsavedChanges)
 
   useEffect(() => {
     setTestimonials(
@@ -34,6 +38,14 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
     setNewTextTestimonials('')
   }, [router])
 
+  function addUnsavedChanges(id) {
+    setUnsavedChanges([...unsavedChanges, id])
+  }
+
+  function removeUnsavedChanges(id) {
+    setUnsavedChanges(unsavedChanges.filter(item => item != id))
+  }
+
 
   function updateTestimonials(testimonial) {
     setTestimonials([
@@ -50,6 +62,8 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
     if (text == "" || text == null) {
       return
     }
+
+    addUnsavedChanges(text.slice(0))
 
     setNewTextTestimonials("")
 
@@ -93,11 +107,22 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
         ])
       }
     }
+
+    removeUnsavedChanges(text)
   }
 
   async function handleDelTestimonial(e, itemId) {
-    e.preventDefault();
+    e.preventDefault()
+    addUnsavedChanges(itemId)
     let toDelete = testimonials.filter(item => item.key == itemId)[0]
+
+    if (confirm('Confirma a exclusão do depoimento abaixo? \n \n' + toDelete.text)) {
+      await confirmedDelTestimonial(itemId, toDelete)
+    }
+    removeUnsavedChanges(itemId)
+  }
+
+  async function confirmedDelTestimonial(itemId, toDelete) {
     setTestimonials(testimonials.filter(item => item.key != itemId))
     setCountTestimonials(countTestimonials - 1)
     const body = { id: itemId }
@@ -111,6 +136,7 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
 
   async function handleReport(e, itemId) {
     e.preventDefault();
+    addUnsavedChanges(itemId)
     let toReport = testimonials.filter(item => item.key == itemId)[0]
     toReport.report = 'pending'
     updateTestimonials(toReport)
@@ -123,10 +149,12 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
       console.error(reported)
     }
     updateTestimonials(toReport)
+    removeUnsavedChanges(itemId)
   }
 
   async function handleCancelReport(e, itemId) {
     e.preventDefault();
+    addUnsavedChanges(itemId)
     let toCancelReport = testimonials.filter(item => item.key == itemId)[0]
     toCancelReport.receiver_id = ''
     const reportId = toCancelReport.report
@@ -141,6 +169,7 @@ const TestimonialsBoxWrapper = ({ userProfile, list }) => {
       console.error(reportCanceled)
     }
     updateTestimonials(toCancelReport)
+    removeUnsavedChanges(itemId)
   }
 
   const TestimonialsList = ({ testimonials }) => {
