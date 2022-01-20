@@ -4,6 +4,8 @@ import Link from '../utils/Link'
 import InputBox from './InputBox'
 import Box from './Box'
 import { PostsApiClient } from '../core/apis_clients'
+import { useWarnIfUnsavedChanges } from '../utils/UnsavedChanges'
+import { useState } from 'react'
 
 export function AllCommunitiesBox({ title, count, list }) {
   return (
@@ -30,6 +32,21 @@ export function AllCommunitiesBox({ title, count, list }) {
 
 export function NewCommunityBox() {
   const loggedUser = useLoggedUser()
+  const [unsavedChanges, setUnsavedChanges] = useState([])
+  const [title, setTitle] = useState("")
+  const [imageURL, setImageURL] = useState("")
+  const [isButtonVisible, setButtonVisible] = useState(true)
+
+  useWarnIfUnsavedChanges(unsavedChanges)
+
+  function addUnsavedChanges(id) {
+    setUnsavedChanges([...unsavedChanges, id])
+  }
+
+  function removeUnsavedChanges(id) {
+    setUnsavedChanges(unsavedChanges.filter(item => item != id))
+  }
+
 
   async function handleAddCommunity(e) {
     e.preventDefault();
@@ -40,35 +57,55 @@ export function NewCommunityBox() {
       title: dadosDoForm.get('title'),
       imageUrl: dadosDoForm.get('image')
     }
+    addUnsavedChanges(community.title)
+    setButtonVisible(false)
 
     const createdCommunity = await PostsApiClient('POST', community, loggedUser)
-  }
-  return (
-    <InputBox>
-      <h2 className="subTitle">Crie novas comunidades.</h2>
-      <form onSubmit={(e) => handleAddCommunity(e)}>
-        <div>
-          <input
-            placeholder="Defina o nome da sua comunidade!"
-            name="title"
-            aria-label="Defina o nome da sua comunidade!"
-            type="text"
-          />
-        </div>
-        <div>
-          <input
-            placeholder="Informe a URL da imagem que usaremos de capa"
-            name="image"
-            aria-label="Informe a URL da imagem que usaremos de capa"
-          />
-        </div>
 
-        <button>
-          Criar comunidade
-        </button>
-      </form>
-    </InputBox>
-  )
+    if (!createdCommunity.id) {
+      console.error(createdCommunity)
+    } else {
+      setTitle("")
+      setImageURL("")
+    }
+
+    removeUnsavedChanges(community.title)
+    setButtonVisible(true)
+  }
+  return (<>
+    {!!loggedUser?.gitHubUserId &&
+      <InputBox>
+        <h2 className="subTitle">Crie novas comunidades.</h2>
+        <form onSubmit={(e) => handleAddCommunity(e)}>
+          <div>
+            <input
+              placeholder="Defina o nome da sua comunidade!"
+              name="title"
+              aria-label="Defina o nome da sua comunidade!"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              placeholder="Informe a URL da imagem que usaremos de capa"
+              name="image"
+              aria-label="Informe a URL da imagem que usaremos de capa"
+              value={imageURL}
+              onChange={(e) => setImageURL(e.target.value)}
+            />
+          </div>
+          <button>
+            {isButtonVisible ?
+              "Criar comunidade" :
+              "Criando..."
+            }
+          </button>
+        </form>
+      </InputBox>
+    }
+  </>)
 }
 
 
