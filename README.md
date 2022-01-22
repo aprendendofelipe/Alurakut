@@ -1,6 +1,8 @@
 # Alurakut do Felipe
 Projeto iniciado durante 3a. edição da Imersão React da Alura, mas com mudanças no visual e acréscimo de funcionalidades.
 
+![](https://alurakut-zeta-six.vercel.app/github_sunglasses_pink.svg)
+
 Principais funcionalidades adicionadas:
  - Login social com GitHub via Firebase.
  - Pesquisa de usuários via API GraphQL do GitHub.
