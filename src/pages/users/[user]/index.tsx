@@ -1,5 +1,5 @@
 import { getServerProps } from '../../../services/Vercel/serverside'
-import UserProfile from '../../../components/userProfile'
+import UserProfile from '../../../components/UserProfile'
 
 const ProfileByUsername = (props) => <UserProfile UserProfileProps={props} />
 
