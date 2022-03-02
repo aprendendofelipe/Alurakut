@@ -2,36 +2,23 @@ export default function UserStats({ username }) {
     return (
         <div style={{
             margin: '-16px',
-            position: 'relative'
         }}>
-            <iframe
-                height={'100%'}
-                width={'100%'}
-                frameBorder={0}
-                allowFullScreen={false}
-                src={'https://github-readme-stats.vercel.app/api?username=' +
-                    username +
-                    '&count_private=true' +
-                    '&locale=pt-br' +
-                    '&hide_border=true' +
-                    '&hide_title=true' +
-                    '&show_icons=true' +
-                    '&icon_color=D81D99' +
-                    '&text_color=2E7BB4'
-                }
-            />
-            <a
-                style={{
-                    display: 'inline-block',
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    top: '0',
-                    left: '0',
-                }}
-                href='https://github.com/anuraghazra/github-readme-stats'
+            <a href="https://github.com/anuraghazra/github-readme-stats"
                 target="_blank" rel="noreferrer noopener nofollow"
-            />
+            >
+                <img
+                    src={
+                        'https://github-readme-stats.vercel.app/api?username=' +
+                        username +
+                        '&locale=pt-br' +
+                        '&include_all_commits=true' +
+                        '&hide_border=true' +
+                        '&hide_title=true' +
+                        '&show_icons=true' +
+                        '&icon_color=D81D99' +
+                        '&text_color=2E7BB4'
+                    } />
+            </a>
         </div>
     )
 }
@@ -46,32 +33,21 @@ export function TopLangs({ username }) {
             marginTop: '-22px',
             position: 'relative'
         }}>
-            <iframe
-                height={'100%'}
-                width={'100%'}
-                frameBorder={0}
-                allowFullScreen={false}
-                src={'https://github-readme-stats.vercel.app/api/top-langs/?username=' +
-                    username +
-                    '&count_private=true' +
-                    '&locale=pt-br' +
-                    '&hide_border=true' +
-                    '&hide_title=true' +
-                    '&layout=compact'
-                }
-            />
             <a
-                style={{
-                    display: 'inline-block',
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    top: '0',
-                    left: '0',
-                }}
-                href='https://github.com/anuraghazra/github-readme-stats'
+                href="https://github.com/anuraghazra/github-readme-stats"
                 target="_blank" rel="noreferrer noopener nofollow"
-            />
+            >
+                <img
+                    src={
+                        'https://github-readme-stats.vercel.app/api/top-langs/?username=' +
+                        username +
+                        '&locale=pt-br' +
+                        '&hide_border=true' +
+                        '&hide_title=true' +
+                        '&layout=compact'
+                    }
+                />
+            </a>
         </div>
     </>)
 }
