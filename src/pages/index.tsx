@@ -17,6 +17,7 @@ import TestimonialsBoxWrapper from '../components/Testimonials'
 import { getServerProps } from '../services/Vercel/serverside'
 import { useGitHubUserAPI, useLoggedUser } from '../core/hooks'
 import { NewCommunityBox } from '../components/Communities'
+import UserStats, { TopLangs } from '../components/UserStats'
 
 const Home = (props) => {
   const loggedUser = useLoggedUser(props.userProfile)
@@ -69,10 +70,10 @@ const Home = (props) => {
             <p>
               {props.userProfile.bio}
             </p>
-
-            <OrkutNostalgicIconSet />
           </Box>
-
+          <Box>
+            <UserStats username={props.userProfile.login} />
+          </Box>
           <Box>
             <h2 className='subTitle'>Sugestões de {process.env.NEXT_PUBLIC_APP_NAME}:</h2>
             <span className="suggestions">
@@ -98,6 +99,9 @@ const Home = (props) => {
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
           {/* <ProfileRelationsBoxWrapper title="Seguidores" list={seguidores} /> */}
 
+          <Box>
+            <TopLangs username={props.userProfile.login} />
+          </Box>
           <ProfileRelationsBoxWrapper
             title="Pessoas da comunidade"
             list={pessoasFavoritasOBJList}
