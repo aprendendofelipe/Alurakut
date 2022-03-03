@@ -2,6 +2,8 @@ export default function UserStats({ username }) {
     return (
         <div style={{
             margin: '-16px',
+            overflow: 'hidden',
+            borderRadius: '8px',
         }}>
             <a href="https://github.com/anuraghazra/github-readme-stats"
                 target="_blank" rel="noreferrer noopener nofollow"
@@ -30,8 +32,8 @@ export function TopLangs({ username }) {
         </h2>
         <div style={{
             margin: '-16px',
-            marginTop: '-22px',
-            position: 'relative'
+            overflow: 'hidden',
+            borderRadius: '8px',
         }}>
             <a
                 href="https://github.com/anuraghazra/github-readme-stats"
